@@ -27,10 +27,11 @@
 import subprocess
 import os
 
-from libqtile import bar, layout, hook, qtile
+from libqtile import bar, layout, hook, qtile, extension
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.layout import RatioTile
+from libqtile.dgroups import simple_key_binder
 
 from qtile_extras import widget
 from qtile_extras.widget.decorations import BorderDecoration
@@ -117,27 +118,52 @@ keys = [
 
     # Custom keybindings
     Key([mod, "shift"], "l", lazy.spawn("betterlockscreen -l"), desc="Lock screen"),
+    Key([mod], "p", lazy.run_extension(extension.DmenuRun(
+        dmenu_prompt="$",
+    ))),
 
 ]
 
-groups = [Group(i) for i in "123456789"]
+groups = [
+    Group("DEV1", layout='stack'),
+    Group("DEV2", layout='stack'),
+    Group("DEV3", layout='stack'),
+    Group("WWW4", layout='stack'),
+    Group("WWW5", layout='stack'),
+    Group("6", layout='tile'),
+    Group("7", layout='tile'),
+    Group("8", layout='tile'),
+    Group("9", layout='tile'),
+    Group("0", layout='tile'),
+    Group("COMM", layout='max'),
+]
 
-for i in groups:
+# groups = [Group(i) for i in "123456789"]
+
+# Allow MODKEY+[0 through 9] to bind to groups, see 
+# MOD4 + index Number : Switch to Group[index]
+# MOD4 + shift + index Number : Send active window to another Group
+# dgroups_key_binder = simple_key_binder(mod)
+
+for idx, group in enumerate(groups):
+    hkey = str(idx + 1)[-1]
+    if idx == 10:
+        hkey = "grave"
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                hkey,
+                lazy.group[group.name].toscreen(),
+                desc="Switch to group {}".format(group.name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                hkey,
+                lazy.window.togroup(group.name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(group.name),
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -199,118 +225,229 @@ primary_monitor = primary_line and primary_line[0].split()[0]
 # Add a status bar to each monitor
 screens = []
 
+sep_padding = 10
+icon_padding = 5
+widget_padding = 10
 
 def generate_bar_elements(monitor_name, show_systray):
     bar_elements = [
+        # Terminal Icon
+        widget.Sep(
+            linewidth=0,
+            padding=int(sep_padding*1.5),
+            foreground=colours[1],
+            background=colours[1],
+        ),
         widget.Image(
-            filename="~/.config/qtile/icons/terminal.png",
-            scale="True",
+            filename="~/.config/qtile/icons/robot.png",
+            scale=0.7,
+            padding=icon_padding,
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal)},
         ),
-        widget.CurrentLayout(),
-        widget.GroupBox(),
-        widget.Prompt(),
-        widget.WindowName(),
+        widget.Sep(
+            linewidth=0,
+            padding=int(sep_padding*1.5),
+            foreground=colours[1],
+            background=colours[1],
+        ),
+
+        # Layout switcher
+        widget.CurrentLayoutIcon(
+            custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
+            foreground = colours[2],
+            background = colours[0],
+            padding=icon_padding,
+            scale=0.7,
+        ),
+        widget.CurrentLayout(
+            foreground = colours[2],
+            background = colours[0],
+            padding=widget_padding,
+        ),
+        widget.Sep(
+            linewidth=0,
+            padding=sep_padding,
+            foreground=colours[1],
+            background=colours[1],
+        ),
+
+        # Workspaces
+        widget.GroupBox(
+            fontsize=8,
+            rounded=True,
+            this_current_screen_border=colours[3],
+            other_current_screen_border=colours[5],
+            highlight_method='block'
+        ),
+        # widget.Prompt(),
+
+        # Window Name
+        widget.WindowName(
+            padding=widget_padding,
+        ),
         widget.Chord(
             chords_colors={
                 "launch": ("#ff0000", "#ffffff"),
             },
             name_transform=lambda name: name.upper(),
         ),
+
+        # CPU Graph
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\uf2db",
+            padding=icon_padding,
+            foreground=colours[9],
+            background=colours[0],
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal + " htop")},
+        ),
+        widget.CPUGraph(
+            graph_color=colours[9],
+            background=colours[0],
+            padding=widget_padding,
+            border_width=0,
+            line_width=1,
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal + " htop")},
+        ),
+        widget.Sep(
+            linewidth=0,
+            padding=sep_padding,
+            foreground=colours[1],
+            background=colours[1],
+        ),
+
+        # Display the monitor name
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\ue163",
+            padding=icon_padding,
+            foreground=colours[1],
+            background=colours[7 if primary_monitor == monitor_name else 2],
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("arandr")},
+        ),
         widget.TextBox(
             monitor_name,
             name="monitor",
+            padding=widget_padding,
             foreground=colours[1],
-            background=colours[7 if primary_monitor else 2],
+            background=colours[7 if primary_monitor == monitor_name else 2],
             mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("arandr")},
 
         ),
         widget.Sep(
             linewidth=0,
-            padding=6,
+            padding=sep_padding,
             foreground=colours[1],
             background=colours[1],
         ),
+
+        # Clock
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\uf017",
+            padding=icon_padding,
+            foreground=colours[4],
+            background=colours[0],
+        ),
+        widget.Clock(
+            format="%Y-%m-%d %H:%M:%S",
+            padding=widget_padding,
+            foreground=colours[4],
+            background=colours[0],
+        ),
+        widget.Sep(
+            linewidth=0,
+            padding=sep_padding,
+            foreground=colours[1],
+            background=colours[1],
+        ),
+
+        # Network Speed
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\uf6ff",
+            padding=icon_padding,
+            foreground=colours[5],
+            background=colours[0],
+        ),
+        widget.Net(
+            interface="wlo1",
+            format="Wifi {down} ↓↑ {up}",
+            padding=widget_padding,
+            foreground=colours[5],
+            background=colours[0],
+            width=170,
+        ),
+        widget.Sep(
+            linewidth=0,
+            padding=sep_padding,
+            foreground=colours[1],
+            background=colours[1],
+        ),
+
+        # Battery
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\uf5df",
+            padding=icon_padding,
+            foreground=colours[6],
+            background=colours[0],
+        ),
+        widget.Battery(
+            foreground=colours[6],
+            background=colours[0],
+            padding=widget_padding,
+        ),
+        widget.Sep(
+            linewidth=0,
+            padding=sep_padding,
+            foreground=colours[1],
+            background=colours[1],
+        ),
+
+        # Systray
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-        widget.Systray(icon_size=20)
-        if show_systray
+        # Systray can only be displayed once, so it is only displayed on the primary display        
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\uf053",
+            padding=icon_padding,
+            foreground=colours[8],
+            background=colours[0],
+        ),
+        widget.Systray(
+            icon_size=20,
+            padding=widget_padding,
+            foreground=colours[8],
+            background=colours[0],
+        ) if show_systray
         else widget.Sep(
             linewidth=0,
             padding=0,
             foreground=colours[1],
             background=colours[1],
         ),
-        # widget.Systray() if show_systray else None,
-        widget.Sep(
-            linewidth=0,
-            padding=6,
-            foreground=colours[1],
-            background=colours[1],
-        ),
-        widget.Clock(
-            format="%Y-%m-%d %a %I:%M %p",
-            foreground=colours[4],
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\uf054",
+            padding=icon_padding,
+            foreground=colours[8],
             background=colours[0],
         ),
         widget.Sep(
             linewidth=0,
-            padding=6,
+            padding=sep_padding,
             foreground=colours[1],
             background=colours[1],
         ),
-        # widget.Wlan(
-        #     interface="wlo1",
-        #     format="Wifi {down} ↓↑ {up}",
-        #     foreground=colours[5],
-        #     background=colours[0],
-        #     padding=5,
-        #     decorations=[
-        #         BorderDecoration(
-        #             colour=colours[6],
-        #             border_width=[0, 0, 2, 0],
-        #             padding_x=5,
-        #             padding_y=None,
-        #         )
-        #     ],
-        # ),
-        widget.Net(
-            interface="wlo1",
-            format="Wifi {down} ↓↑ {up}",
-            foreground=colours[5],
-            background=colours[0],
-            padding=5,
-            decorations=[
-                BorderDecoration(
-                    colour=colours[6],
-                    border_width=[0, 0, 2, 0],
-                    padding_x=5,
-                    padding_y=None,
-                )
-            ],
-        ),
-        widget.Sep(
-            linewidth=0,
-            padding=6,
-            foreground=colours[1],
-            background=colours[1],
-        ),
-        widget.Battery(
-            foreground=colours[6],
-            background=colours[0],
-        ),
-        widget.Sep(
-            linewidth=0,
-            padding=6,
-            foreground=colours[1],
-            background=colours[1],
-        ),
+
+        # Log off
         widget.QuickExit(
             foreground=colours[7],
             background=colours[0],
+            padding=widget_padding,
         ),
     ]
-    # if not show_systray:
-    #     bar_elements.pop(-10)
     return bar_elements
 
 
@@ -321,7 +458,7 @@ for i, connected_monitor in enumerate(connected_monitors):
         show_systray = i == 0
     screens.append(
         Screen(
-            bottom=bar.Bar(
+            top=bar.Bar(
                 generate_bar_elements(
                     monitor_name=connected_monitor, show_systray=show_systray
                 ),
