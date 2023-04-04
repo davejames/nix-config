@@ -1,0 +1,4 @@
+[submodule ".config/nixos/flakes"]
+	path = .config/nixos/flakes
+	url = git@github.com:davejames/nix-flakes.git
+	branch = main
