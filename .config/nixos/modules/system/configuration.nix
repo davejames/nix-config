@@ -69,7 +69,16 @@
         ssh-djdc = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/djdc";
         ssh-personal = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/id_rsa";
         display-30hz = "./.screenlayout/home-30hz.sh";
-        wavebox = "flatpak run io.wavebox.Wavebox";
+        # wavebox = "flatpak run io.wavebox.Wavebox";
+        ansible = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.ansible'";
+        odoo16 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v16'";
+        odoo15 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v15'";
+        odoo14 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v14'";
+        odoo13 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v13'";
+        odoo12 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v12'";
+        odoo11 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v11'";
+        odoo10 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v10'";
+        odoo9 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v9'";
       };
     };
     # Laptop-specific packages (the other ones are installed in `packages.nix`)
