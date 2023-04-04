@@ -37,7 +37,7 @@ from qtile_extras import widget
 from qtile_extras.widget.decorations import BorderDecoration
 
 mod = "mod4"
-terminal = "kitty"
+terminal = "alacritty"
 
 
 @lazy.function
@@ -62,6 +62,11 @@ def get_grow_method(direction, *args):
         elif direction == "down":
             return lazy.layout.grow_down()
 
+@lazy.window.function
+def move_floating_window(window, x: int = 0, y: int = 0):
+    new_x = window.float_x + x
+    new_y = window.float_y + y
+    window.cmd_set_position_floating(new_x, new_y)
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -122,12 +127,17 @@ keys = [
         dmenu_prompt="$",
     ))),
 
+    # Key([mod, 'shift'], "u", move_floating_window(x=10)),
+    # Key([mod, 'shift'], 'y', move_floating_window(x=-10)),
+    # Key([mod, 'shift'], 'i', move_floating_window(y=10)),
+    # Key([mod, 'shift'], 'o', move_floating_window(y=-10)),
+
 ]
 
 groups = [
-    Group("DEV1", layout='stack'),
-    Group("DEV2", layout='stack'),
-    Group("DEV3", layout='stack'),
+    Group("DEV1", layout='monadtall'),
+    Group("DEV2", layout='monadtall'),
+    Group("DEV3", layout='monadtall'),
     Group("WWW4", layout='stack'),
     Group("WWW5", layout='stack'),
     Group("6", layout='tile'),
