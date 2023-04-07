@@ -60,6 +60,20 @@
       };
     };
 
+    services.picom = {
+      enable = true;
+      settings = {
+        method = "gaussian";
+        size = 10;
+        deviation = 5.0;
+      };
+    };
+
+    services.passSecretService = with pkgs; {
+        enable = true;
+        package = keepassxc;
+    };
+
     programs.fish = {
       enable = true;
       vendor.completions.enable = true;
@@ -108,6 +122,8 @@
       fzf
       silver-searcher
 
+      nnn
+
       git
       direnv
 
@@ -120,7 +136,6 @@
 
       # haskellPackages.xmobar
 
-      picom
       nitrogen
       pkgs.trayer
 
