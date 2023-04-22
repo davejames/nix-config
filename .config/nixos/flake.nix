@@ -44,6 +44,14 @@
                                 extraSpecialArgs = { inherit inputs; };
                                 # Home manager config (configures programs like firefox, zsh, eww, etc)
                                 users.djames = (./. + "/hosts/${hostname}/user.nix");
+                                #users.djames.xdg.mimeApps = {
+                                #    enable = true;
+                                #    defaultApplications = {
+                                #        "application/pdf" = "firefox";
+                                #        "image/png" = "feh";
+                                #        "image/jpg" = "feh";
+                                #      };
+                                #  };
                             };
                             #nixpkgs.overlays = [
                             #    # Add nur overlay for Firefox addons

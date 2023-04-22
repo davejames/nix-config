@@ -41,7 +41,7 @@
       windowManager.qtile = {
         enable = true;
         backend = "x11";
-        extraPackages = python3Packages: with python3Packages; [
+        extraPackages = python310Packages: with python310Packages; [
           qtile-extras
           psutil
           dbus-python
@@ -51,22 +51,58 @@
           # iwlib
           dateutil
           keyring
+          jsons
         ];
       };
       displayManager = {
-        lightdm.enable = true;
-        #gdm.enable = true;
+        lightdm = {
+          enable = true;
+          background = "/etc/lightdm/background.jpg";
+          greeters.enso = {
+            enable = true;
+            blur = true;
+            #extraConfig = ''
+            #  default-wallpaper=/home/djames/.config/wallpaper/landscape/13.png
+            #'';
+          };
+        };
         defaultSession = "none+qtile";
       };
     };
 
+    # Required for VIA, but might be causing some instability, disabled for now
+    # services.udev = {
+    #   enable = true;
+    #   extraRules = ''
+    #    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+    #   '';
+    # };
+
     services.picom = {
       enable = true;
-      settings = {
-        method = "gaussian";
-        size = 10;
-        deviation = 5.0;
-      };
+      activeOpacity = 1.0;
+      inactiveOpacity = 0.97;
+      shadowOpacity = 0.8;
+      shadowOffsets = [ (-8) (-8) ];
+      fade = true;
+      shadow = true;
+      opacityRules = [
+        "100:class_g = 'i3lock'"
+      ];
+      #settings = {
+        #blur = {
+        #  method = "gaussian";
+        #  size = 3;
+        #  deviation = 2.0;
+        #  background = false;
+        #};
+        #corner.radius = 5;
+        #opacity = {
+        #  rule
+        #fading = true;
+        #active-opacity = 1;
+        #inactive-ipacity = 0.9;
+      #};
     };
 
     services.passSecretService = with pkgs; {
@@ -93,7 +129,8 @@
         odoo11 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v11'";
         odoo10 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v10'";
         odoo9 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v9'";
-      };
+        pre-commit = "~/dockerfiles/pre-commit.sh";
+        };
     };
     # Laptop-specific packages (the other ones are installed in `packages.nix`)
     environment.systemPackages = with pkgs; [
@@ -115,6 +152,7 @@
       pkgs.screen
 
       dmenu
+      rofi
       fira-code
 
       alacritty
@@ -139,10 +177,18 @@
       nitrogen
       pkgs.trayer
 
+      via
+
       htop
       iotop
       rsync
 
+      keepassxc
+      libsecret
+
+      conky
+
+      nerdfonts
     ];
 
     # Install fonts
@@ -152,6 +198,8 @@
             roboto
             openmoji-color
             (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+            (nerdfonts.override { fonts = [ "Monofur" ]; })
+            (nerdfonts.override { fonts = [ "Hermit" ]; })
             font-awesome
             symbola
             mononoki
@@ -167,11 +215,14 @@
     };
 
     # Enable flatpaks
-    xdg.portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-      ];
+    xdg = 
+    {
+      portal = {
+        enable = true;
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-gtk
+        ];
+      };
     };
     services.flatpak.enable = true;
 
@@ -217,23 +268,38 @@
         extraGroups = [ "input" "wheel" "networkmanager" "docker" ];
         shell = pkgs.fish;
         packages = with pkgs; [
-          #conda
-          #poetry
           firefox
           google-chrome
-          #kate
-          jetbrains.pycharm-professional
+          brave
+          # jetbrains.pycharm-professional
           vscode
           nano
-          # wavebox
-          # teams
-          # thunderbird
-          neovim
+          # neovim
+          libreoffice
+
+          # Neovim plugin deps
+          # ripgrep
+          # fd
+          # lazygit
+          # vimPlugins.nvim-treesitter
+          # vimPlugins.completion-treesitter
+          # vimPlugins.nnn-vim
+          # perl
+          # xclip
+
+          zip
+          unzip
+          swayimg
           betterlockscreen
           trilium-desktop
           obsidian
           gh
           black
+
+          vlc
+          flameshot
+          simplescreenrecorder
+          
         ];
 
     };

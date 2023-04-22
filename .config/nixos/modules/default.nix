@@ -12,9 +12,11 @@
         # ./wofi
 
         # cli
-        # ./nvim
+        ./nvim
         # ./zsh
         ./git
+        ./jetbrains
+        ./docker
         # ./postgresql
         # ./gpg
         # ./direnv
