@@ -162,7 +162,7 @@ def generate_bar_elements(
             padding=widget_padding,
             foreground=colour_scheme.col(5, gradient=False),
             background=colour_scheme.col(0, gradient=False),
-            width=170,
+            width=180,
             # mouse_callbacks={"Button1": lambda: rotate_net_interface()},
         ),
         widget.Sep(

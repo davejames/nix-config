@@ -78,11 +78,8 @@ def init_keybindings(config):
             Key(
                 [mod],
                 "p",
-                lazy.run_extension(
-                    extension.DmenuRun(
-                        dmenu_prompt="$",
-                    )
-                ),
+                lazy.spawn("rofi -show"),
+                desc="Launch Application",
             ),
             Key(
                 [mod],

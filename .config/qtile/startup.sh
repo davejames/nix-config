@@ -10,7 +10,9 @@
 #/usr/lib/kdeconnectd &
 #/usr/bin/kdeconnect-indicator &
 #redshift-gtk &
-nm-applet &
+#nm-applet &
+flameshot &
+keepassxc &
 #gnome-keyring-daemon --start
 #nextcloud &
 #keepassxc &
