@@ -12,11 +12,14 @@
         # ./wofi
 
         # cli
+        ./alacritty
         ./nvim
-        # ./zsh
+        ./fish
+        ./zsh
         ./git
         ./jetbrains
         ./docker
+        ./tmux
         # ./postgresql
         # ./gpg
         # ./direnv

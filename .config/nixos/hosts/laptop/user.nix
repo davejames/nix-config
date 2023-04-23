@@ -9,12 +9,13 @@
         jetbrains = {
             pycharm.enable = true;
         };
+        alacritty.enable = true;
         docker.enable = true;
+        tmux.enable = true;
+        #fish.enable = true;
+        zsh.enable = true;
         # postgresql.enable = true;
-
         # cli
-        # nvim.enable = true;
-
     };
 
     config.xdg.mimeApps = {

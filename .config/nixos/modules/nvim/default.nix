@@ -68,17 +68,17 @@ in {
             nodePackages.pyright
         ];
 
-        programs.fish = {
-            #initExtra = ''
-            #    export EDITOR="nvim"
-            #'';
-
-            # shellAliases = {
-            #     h = "nvim -i NONE";
-            #     vim = "nvim -i NONE";
-            #     nvim = "nvim -i NONE";
-            # };
-        };
+        # programs.fish = {
+        #     #initExtra = ''
+        #     #    export EDITOR="nvim"
+        #     #'';
+        #
+        #     # shellAliases = {
+        #     #     h = "nvim -i NONE";
+        #     #     vim = "nvim -i NONE";
+        #     #     nvim = "nvim -i NONE";
+        #     # };
+        # };
 
         programs.neovim = {
             enable = true;

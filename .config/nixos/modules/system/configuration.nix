@@ -1,5 +1,12 @@
 { config, pkgs, inputs, ... }:
 
+let
+    cachixSrc = builtins.fetchTarball {
+        url = "https://github.com/cachix/devenv/archive/v0.6.2.tar.gz";
+        sha256 = "sha256:12dd5g3p9azm2ns9gs9y1fmc7bd0frwwf4cz10wmnvrpvs8d4gcq";
+    };
+    devenv = (import cachixSrc);
+in
 {
     nixpkgs.config.allowUnfree = true;
 
@@ -70,6 +77,42 @@
       };
     };
 
+    # programs.fish = {
+    #     enable = true;
+    #     /* plugins = [
+    #         # Enable a plugin (here grc for colorized command output) from nixpkgs
+    #         { name = "grc"; src = pkgs.fishPlugins.grc.src; }
+    #         # Manually packaging and enable a plugin
+    #         {
+    #         name = "z";
+    #         src = pkgs.fetchFromGitHub {
+    #             owner = "jethrokuan";
+    #             repo = "z";
+    #             rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
+    #             sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
+    #         };
+    #         }
+    #     ]; */
+    #     vendor.completions.enable = true;
+    #     shellAliases = {
+    #         gitcfg = "/etc/profiles/per-user/djames/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME";
+    #         ssh-willdoo = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/willdooit";
+    #         ssh-djdc = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/djdc";
+    #         ssh-personal = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/id_rsa";
+    #         display-30hz = "./.screenlayout/home-30hz.sh";
+    #         # wavebox = "flatpak run io.wavebox.Wavebox";
+    #         ansible = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.ansible'";
+    #         odoo16 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v16'";
+    #         odoo15 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v15'";
+    #         odoo14 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v14'";
+    #         odoo13 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v13'";
+    #         odoo12 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v12'";
+    #         odoo11 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v11'";
+    #         odoo10 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v10'";
+    #         odoo9 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v9'";
+    #         pre-commit = "~/dockerfiles/pre-commit.sh";
+    #     };
+    # };
     # Required for VIA, but might be causing some instability, disabled for now
     # services.udev = {
     #   enable = true;
@@ -110,41 +153,18 @@
         package = keepassxc;
     };
 
-    programs.fish = {
-      enable = true;
-      vendor.completions.enable = true;
-      shellAliases = {
-        gitcfg = "/etc/profiles/per-user/djames/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME";
-        ssh-willdoo = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/willdooit";
-        ssh-djdc = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/djdc";
-        ssh-personal = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/id_rsa";
-        display-30hz = "./.screenlayout/home-30hz.sh";
-        # wavebox = "flatpak run io.wavebox.Wavebox";
-        ansible = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.ansible'";
-        odoo16 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v16'";
-        odoo15 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v15'";
-        odoo14 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v14'";
-        odoo13 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v13'";
-        odoo12 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v12'";
-        odoo11 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v11'";
-        odoo10 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v10'";
-        odoo9 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v9'";
-        pre-commit = "~/dockerfiles/pre-commit.sh";
-        };
-    };
     # Laptop-specific packages (the other ones are installed in `packages.nix`)
     environment.systemPackages = with pkgs; [
       acpi
       tlp
 
-      fish
-      fishPlugins.done
-      fishPlugins.fzf-fish
-      fishPlugins.forgit
-      fishPlugins.hydro
-      fzf
-      #fishPlugins.grc
-      #grc
+      # fishPlugins.done
+      # fishPlugins.fzf-fish
+      # fzf
+      # fishPlugins.forgit
+      # fishPlugins.hydro
+      # fishPlugins.grc
+      # grc
 
       killall
 
@@ -155,14 +175,14 @@
       rofi
       fira-code
 
-      alacritty
+      #alacritty
       kitty
       fzf
       silver-searcher
 
       nnn
 
-      git
+      #git
       direnv
 
       vifm-full
@@ -263,10 +283,12 @@
     };
 
     # Set up user and enable sudo
+    # programs.fish.enable = true;
+    programs.zsh.enable = true;
     users.users.djames = {
         isNormalUser = true;
         extraGroups = [ "input" "wheel" "networkmanager" "docker" ];
-        shell = pkgs.fish;
+        shell = pkgs.zsh;
         packages = with pkgs; [
           firefox
           google-chrome
@@ -276,7 +298,7 @@
           nano
           # neovim
           libreoffice
-
+          devbox
           # Neovim plugin deps
           # ripgrep
           # fd
@@ -293,13 +315,13 @@
           betterlockscreen
           trilium-desktop
           obsidian
-          gh
-          black
+          #gh
+          #black
 
           vlc
           flameshot
           simplescreenrecorder
-          
+          devenv
         ];
 
     };

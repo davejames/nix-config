@@ -23,7 +23,7 @@ local opts = { silent = true, noremap = true }
 -- map("n", "<C-l>", "<C-w>l", opts)
 map('n', '<C-g>', ':Telescope live_grep path=%:p:h select_buffer=true <CR>', opts)
 map('n', '<C-f>', ':Telescope find_files path=%:p:h select_buffer=true <CR>', opts)
-map('n', '<C-b>', ':Telescope file_browser path=%:p:h select_buffer=true <CR>', { noremap = true } )
+map('n', '<C-b>', ':Telescope file_browser path=%:p:h grouped=true select_buffer=true <CR>', { noremap = true } )
 map('n', 'j', 'gj', opts)
 map('n', 'k', 'gk', opts)
 map('n', ';', ':', { noremap = true } )
@@ -39,7 +39,7 @@ g.mapleader = '\\'
 
 -- Performance
 o.lazyredraw = true;
-o.shell = "fish"
+o.shell = "zsh"
 o.shadafile = "NONE"
 
 -- Colors

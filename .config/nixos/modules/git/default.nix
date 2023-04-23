@@ -6,6 +6,9 @@ let cfg = config.modules.git;
 in {
     options.modules.git = { enable = mkEnableOption "git"; };
     config = mkIf cfg.enable {
+        home.packages = with pkgs; [
+            gh
+        ];
         programs.git = {
             enable = true;
             userName = "David James";
