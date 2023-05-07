@@ -1,15 +1,11 @@
-{
-  config,
-  lib,
-  inputs,
-  ...
-}: {
+{...}: {
   imports = [../../modules/default.nix];
   config.modules = {
     git.enable = true;
     nvim.enable = true;
     jetbrains = {
       pycharm.enable = true;
+      datagrip.enable = true;
     };
     alacritty.enable = true;
     docker.enable = true;
