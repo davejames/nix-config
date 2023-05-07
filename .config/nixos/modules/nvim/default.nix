@@ -66,6 +66,8 @@ in {
             fd
             nodejs-slim
             nodePackages.pyright
+            nodePackages.dockerfile-language-server-nodejs
+            nodePackages.yaml-language-server
         ];
 
         # programs.fish = {

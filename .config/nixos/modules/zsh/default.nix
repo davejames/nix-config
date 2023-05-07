@@ -10,16 +10,13 @@ in {
             zsh
             fzf
             fd
-            #pkgs.zsh-powerlevel10k
-            #pkgs.spaceship-prompt
         ];
 
-        #home.file.".config/zsh/p10k.zsh".source = ./p10k.zsh;
         programs.zsh = {
             enable = true;
 
             # directory to put config files in
-            # dotDir = ".config/zsh";
+            dotDir = ".config/zsh";
 
             enableCompletion = true;
             enableAutosuggestions = true;
@@ -27,7 +24,6 @@ in {
 
             oh-my-zsh = {
                 enable = true;
-            #    theme = "agnoster";
         
                 plugins = [ 
                     "command-not-found"
@@ -36,8 +32,11 @@ in {
                     "sudo"
                 ];
             };
-            # promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-            # # .zshrc
+
+            localVariables = {
+                ENHANCD_FILTER = "fzf --height 40% --layout=reverse --border";
+            };
+            # .zshrc
             initExtra = ''
                 #source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
                 #source $HOME/.config/zsh/p10k.zsh
@@ -47,71 +46,35 @@ in {
                 #function p10k-on-pre-prompt() {}
                 #function p10k-on-post-prompt() {}
 
-                export ENHANCD_FILTER="fzf --height 40%:fzy"
-                export ENHANCD_USE_ABBREV="true";
+                # export ENHANCD_USE_ABBREV=true;
+                # export ENHANCD_FILTER="fzf --height 40% --layout=reverse --border"
+                # export ENHANCD_ENABLE_SINGLE_DOT="true";
+
+                eval "$(direnv hook zsh)"
             '';
-            # initExtra = ''
-            #     PROMPT="%F{blue}%m %~%b "$'\n'"%(?.%F{green}%Bλ%b |.%F{red}?) %f"
-            #
-            #     export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store";
-            #     export ZK_NOTEBOOK_DIR="~/stuff/notes";
-            #     export DIRENV_LOG_FORMAT="";
-            #     bindkey '^ ' autosuggest-accept
-            #
-            #     edir() { tar -cz $1 | age -p > $1.tar.gz.age && rm -rf $1 &>/dev/null && echo "$1 encrypted" }
-            #     ddir() { age -d $1 | tar -xz && rm -rf $1 &>/dev/null && echo "$1 decrypted" }
-            # '';
-            #
-            # # basically aliases for directories: 
-            # # `cd ~dots` will cd into ~/.config/nixos
-            # dirHashes = {
-            #     dots = "$HOME/.config/nixos";
-            #     stuff = "$HOME/stuff";
-            #     media = "/run/media/$USER";
-            #     junk = "$HOME/stuff/other";
-            # };
-            #
-            # # Tweak settings for history
+
+            # Tweak settings for history
             history = {
                 save = 1000;
                 size = 1000;
                 path = "$HOME/.cache/zsh_history";
             };
-            
+
             shellAliases = {
                 gitcfg = "/etc/profiles/per-user/djames/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME";
                 ssh-willdoo = "eval \"$(ssh-agent -s)\" && ssh-add ~/.ssh/willdooit";
                 ssh-djdc = "eval \"$(ssh-agent -s)\" && ssh-add ~/.ssh/djdc";
                 ssh-personal = "eval \"$(ssh-agent -s)\" && ssh-add ~/.ssh/id_rsa";
-                display-home = "$HOME/.screenlayout/home-auto.sh home";
-                display-work = "$HOME/.screenlayout/home-auto.sh work";
-                ansible = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.ansible'";
-                odoo16 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v16'";
-                odoo15 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v15'";
-                odoo14 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v14'";
-                odoo13 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v13'";
-                odoo12 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v12'";
-                odoo11 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v11'";
-                odoo10 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v10'";
-                odoo9 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v9'";
+                displaycfg = "echo 'laptop\nhome\nwork' | fzf --height=40% --layout=reverse --info=inline --border --margin=1 --padding=1 | xargs $HOME/.config/shellscripts/display.sh";
+                search = "$HOME/.config/shellscripts/filesearch.sh";
                 pre-commit = "~/dockerfiles/pre-commit.sh";
+
+                cat = "bat --paging=never --style=plain";
+                ls = "exa --icons";
+                # search = "fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'";
             };
-            #
-            # # Set some aliases
-            # shellAliases = {
-            #     c = "clear";
-            #     mkdir = "mkdir -vp";
-            #     rm = "rm -rifv";
-            #     mv = "mv -iv";
-            #     cp = "cp -riv";
-            #     cat = "bat --paging=never --style=plain";
-            #     ls = "exa -a --icons";
-            #     tree = "exa --tree --icons";
-            #     nd = "nix develop -c $SHELL";
-            #     rebuild = "doas nixos-rebuild switch --flake $NIXOS_CONFIG_DIR --fast; notify-send 'Rebuild complete\!'";
-            # };
-            #
-            # Source all plugins, nix-style
+
+# Source all plugins, nix-style
             plugins = with pkgs; [
                 {
                     name = "spaceship-prompt";

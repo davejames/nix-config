@@ -20,6 +20,7 @@
         ./jetbrains
         ./docker
         ./tmux
+        ./scripts
         # ./postgresql
         # ./gpg
         # ./direnv

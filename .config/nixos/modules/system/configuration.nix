@@ -170,6 +170,7 @@ in
 
       wget
       pkgs.screen
+      dig
 
       dmenu
       rofi
@@ -293,6 +294,7 @@ in
           firefox
           google-chrome
           brave
+          zerotierone
           # jetbrains.pycharm-professional
           vscode
           nano
@@ -322,7 +324,15 @@ in
           flameshot
           simplescreenrecorder
           devenv
-        ];
+          bitwarden
+          bitwarden-cli
+
+          postman
+          insomnia
+          imagemagick
+          exa
+          bat
+      ];
 
     };
 

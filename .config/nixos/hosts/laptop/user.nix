@@ -14,6 +14,7 @@
         tmux.enable = true;
         #fish.enable = true;
         zsh.enable = true;
+        shellScripts.enable = true;
         # postgresql.enable = true;
         # cli
     };
@@ -35,7 +36,8 @@
           "application/xhtml+xml" = "firefox.desktop";
           "application/x-extension-xhtml" = "firefox.desktop";
           "application/x-extension-xht" = "firefox.desktop";
-        };
+          "application/schema+json" = "nvim.desktop";
+      };
         associations.added = {
           "x-scheme-handler/http" = "firefox.desktop";
           "x-scheme-handler/https" = "firefox.desktop";
