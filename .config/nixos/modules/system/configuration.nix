@@ -12,10 +12,8 @@ in
 
     # Remove unecessary preinstalled packages
     environment.defaultPackages = [ ];
-    services.postgresql = with pkgs; {
+    services.postgresql = {
       enable = true;
-      package = postgresql_14;
-      # dataDir = "/var/lib/postgresql/data";
       ensureUsers = [
         {
           name = "djames";
@@ -33,17 +31,6 @@ in
     services.xserver = {
       enable = true;
       desktopManager.xterm.enable = true;
-      # windowManager.xmonad = {
-      #   enableContribAndExtras = true;
-      #   enable = true;
-      #   extraPackages = haskellPackages : [
-      #     haskellPackages.xmonad-contrib
-      #     haskellPackages.xmonad-extras
-      #     haskellPackages.xmonad
-      #     haskellPackages.ghc
-      #     haskellPackages.xmobar
-      #   ];
-      # };
 
       windowManager.qtile = {
         enable = true;
@@ -68,51 +55,12 @@ in
           greeters.enso = {
             enable = true;
             blur = true;
-            #extraConfig = ''
-            #  default-wallpaper=/home/djames/.config/wallpaper/landscape/13.png
-            #'';
           };
         };
         defaultSession = "none+qtile";
       };
     };
 
-    # programs.fish = {
-    #     enable = true;
-    #     /* plugins = [
-    #         # Enable a plugin (here grc for colorized command output) from nixpkgs
-    #         { name = "grc"; src = pkgs.fishPlugins.grc.src; }
-    #         # Manually packaging and enable a plugin
-    #         {
-    #         name = "z";
-    #         src = pkgs.fetchFromGitHub {
-    #             owner = "jethrokuan";
-    #             repo = "z";
-    #             rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
-    #             sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
-    #         };
-    #         }
-    #     ]; */
-    #     vendor.completions.enable = true;
-    #     shellAliases = {
-    #         gitcfg = "/etc/profiles/per-user/djames/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME";
-    #         ssh-willdoo = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/willdooit";
-    #         ssh-djdc = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/djdc";
-    #         ssh-personal = "eval \"$(ssh-agent -c)\" && ssh-add ~/.ssh/id_rsa";
-    #         display-30hz = "./.screenlayout/home-30hz.sh";
-    #         # wavebox = "flatpak run io.wavebox.Wavebox";
-    #         ansible = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.ansible'";
-    #         odoo16 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v16'";
-    #         odoo15 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v15'";
-    #         odoo14 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v14'";
-    #         odoo13 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v13'";
-    #         odoo12 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v12'";
-    #         odoo11 = "cd ~/.config/nixos/flakes/odoo && nix develop '.#devShells.v11'";
-    #         odoo10 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v10'";
-    #         odoo9 = "NIXPKGS_ALLOW_INSECURE=1 cd ~/.config/nixos/flakes/odoo && nix develop --impure '.#devShells.v9'";
-    #         pre-commit = "~/dockerfiles/pre-commit.sh";
-    #     };
-    # };
     # Required for VIA, but might be causing some instability, disabled for now
     # services.udev = {
     #   enable = true;
@@ -132,20 +80,6 @@ in
       opacityRules = [
         "100:class_g = 'i3lock'"
       ];
-      #settings = {
-        #blur = {
-        #  method = "gaussian";
-        #  size = 3;
-        #  deviation = 2.0;
-        #  background = false;
-        #};
-        #corner.radius = 5;
-        #opacity = {
-        #  rule
-        #fading = true;
-        #active-opacity = 1;
-        #inactive-ipacity = 0.9;
-      #};
     };
 
     services.passSecretService = with pkgs; {
@@ -157,70 +91,40 @@ in
     environment.systemPackages = with pkgs; [
       acpi
       tlp
-
-      # fishPlugins.done
-      # fishPlugins.fzf-fish
-      # fzf
-      # fishPlugins.forgit
-      # fishPlugins.hydro
-      # fishPlugins.grc
-      # grc
-
       killall
-
       wget
-      pkgs.screen
+      screen
       dig
-
-      dmenu
       rofi
-      fira-code
-
-      #alacritty
       kitty
-      fzf
-      silver-searcher
-
-      nnn
-
-      #git
-      # direnv
-
-      vifm-full
-
       arandr
       feh
-
       xfce.thunar
-
-      # haskellPackages.xmobar
-
-      nitrogen
-      pkgs.trayer
-
       via
-
       htop
       iotop
       rsync
-
       keepassxc
-      libsecret
-
       conky
-
-      nerdfonts
+      # nerdfonts
+      # fira-code
     ];
 
     # Install fonts
     fonts = {
         fonts = with pkgs; [
-            jetbrains-mono
-            roboto
+            # jetbrains-mono
+            # roboto
             openmoji-color
-            (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-            (nerdfonts.override { fonts = [ "Monofur" ]; })
-            (nerdfonts.override { fonts = [ "Hermit" ]; })
+            (nerdfonts.override {
+                fonts = [
+                    "Ubuntu"
+                    "JetBrainsMono"
+                    "DroidSansMono"
+                    "Monofur"
+                    "Hermit"
+                ];
+            })
             font-awesome
             symbola
             mononoki
@@ -236,16 +140,16 @@ in
     };
 
     # Enable flatpaks
-    xdg = 
-    {
-      portal = {
-        enable = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
-        ];
-      };
-    };
-    services.flatpak.enable = true;
+    # xdg = 
+    # {
+    #   portal = {
+    #     enable = true;
+    #     extraPortals = with pkgs; [
+    #       xdg-desktop-portal-gtk
+    #     ];
+    #   };
+    # };
+    # services.flatpak.enable = true;
 
     # Wayland stuff: enable XDG integration, allow sway to use brillo
     #xdg = {
@@ -295,38 +199,19 @@ in
           google-chrome
           brave
           zerotierone
-          # jetbrains.pycharm-professional
-          vscode
           nano
-          # neovim
           libreoffice
           devbox
-          # Neovim plugin deps
-          # ripgrep
-          # fd
-          # lazygit
-          # vimPlugins.nvim-treesitter
-          # vimPlugins.completion-treesitter
-          # vimPlugins.nnn-vim
-          # perl
-          # xclip
-
           zip
           unzip
-          swayimg
           betterlockscreen
           trilium-desktop
           obsidian
-          #gh
-          #black
-
           vlc
           flameshot
           simplescreenrecorder
-          devenv
           bitwarden
           bitwarden-cli
-
           postman
           insomnia
           imagemagick
@@ -334,17 +219,17 @@ in
           bat
           nodePackages.prettier
           nodePackages.prettier-plugin-toml
+          nixpkgs-fmt
       ];
 
     };
 
     # Set up networking and secure it
     networking = {
-        #wireless.iwd.enable = true;
         firewall = {
             enable = true;
-            allowedTCPPorts = [ 443 80 ];
-            allowedUDPPorts = [ 443 80 44857 ];
+            # allowedTCPPorts = [ 443 80 ];
+            # allowedUDPPorts = [ 443 80 44857 ];
             allowPing = false;
         };
         networkmanager.enable = true;
@@ -352,18 +237,7 @@ in
 
     # Set environment variables
     environment.variables = {
-        # NIXOS_CONFIG = "$HOME/.config/nixos/configuration.nix";
-        # NIXOS_CONFIG_DIR = "$HOME/.config/nixos/";
-        # XDG_DATA_HOME = "$HOME/.local/share";
-        # PASSWORD_STORE_DIR = "$HOME/.local/share/password-store";
-        # GTK_RC_FILES = "$HOME/.local/share/gtk-1.0/gtkrc";
-        # GTK2_RC_FILES = "$HOME/.local/share/gtk-2.0/gtkrc";
-        # MOZ_ENABLE_WAYLAND = "1";
-        # ZK_NOTEBOOK_DIR = "$HOME/stuff/notes/";
         EDITOR = "nvim";
-        # DIRENV_LOG_FORMAT = "";
-        # ANKI_WAYLAND = "1";
-        # DISABLE_QT5_COMPAT = "0";
     };
 
     # Security 

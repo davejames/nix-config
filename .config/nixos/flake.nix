@@ -9,19 +9,14 @@
             url = "github:nix-community/home-manager/master";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-
-        #nur = {
-        #    url = "github:nix-community/NUR";
-        #    inputs.nixpkgs.follows = "nixpkgs";
-        #};
     };
 
     # All outputs for the system (configs)
-    outputs = { home-manager, nixpkgs, ... }@inputs: 
+    outputs = { home-manager, ... }@inputs:
         let
-            system = "x86_64-linux"; #current system
-            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-            lib = nixpkgs.lib;
+            # system = "x86_64-linux"; #current system
+            # pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+            # lib = nixpkgs.lib;
 
             # This lets us reuse the code to "create" a system
             # Credits go to sioodmy on this one!
@@ -42,22 +37,8 @@
                                 useUserPackages = true;
                                 useGlobalPkgs = true;
                                 extraSpecialArgs = { inherit inputs; };
-                                # Home manager config (configures programs like firefox, zsh, eww, etc)
                                 users.djames = (./. + "/hosts/${hostname}/user.nix");
-                                #users.djames.xdg.mimeApps = {
-                                #    enable = true;
-                                #    defaultApplications = {
-                                #        "application/pdf" = "firefox";
-                                #        "image/png" = "feh";
-                                #        "image/jpg" = "feh";
-                                #      };
-                                #  };
                             };
-                            #nixpkgs.overlays = [
-                            #    # Add nur overlay for Firefox addons
-                            #    nur.overlay
-                            #    (import ./overlays)
-                            #];
                         }
                     ];
                     specialArgs = { inherit inputs; };
