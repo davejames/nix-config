@@ -66,6 +66,9 @@ in {
 
         cat = "bat --paging=never --style=plain";
         ls = "exa --icons";
+
+        v = "tmux attach -t `basename $PWD` || tmux new -s `basename $PWD` 'nvim .'";
+        pc = "tmux attach -t pycharm || tmux new -s pycharm -d 'pycharm-professional .'";
       };
 
       plugins = with pkgs; [
