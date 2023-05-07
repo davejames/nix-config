@@ -1,4 +1,0 @@
-[submodule ".config/nixos/modules/ssh/config"]
-	path = .config/nixos/modules/ssh/config
-	url = git@github.com:davejames/sshconfig
-	branch = main
