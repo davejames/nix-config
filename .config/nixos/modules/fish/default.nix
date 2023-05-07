@@ -10,26 +10,19 @@ in {
   options.modules.fish = {enable = mkEnableOption "fish";};
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      #fish
       grc
       awscli2
-      # tide needs to be installed globally: https://github.com/NixOS/nixpkgs/pull/201646#issuecomment-1320893716
+      # tide needs to be installed globally:
+      # https://github.com/NixOS/nixpkgs/pull/201646#issuecomment-1320893716
       fishPlugins.tide
-      # fishPlugins.grc
     ];
     programs.fish = {
       enable = true;
       plugins = [
-        # Enable a plugin (here grc for colorized command output) from nixpkgs
-        # {
-        #     name = "grc";
-        #     src = pkgs.fishPlugins.grc.src;
-        # }
         {
           name = "tide";
           src = pkgs.fishPlugins.tide;
         }
-        # Manually packaging and enable a plugin
         {
           name = "pj";
           src = pkgs.fetchFromGitHub {

@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   ...
@@ -9,7 +8,6 @@ with lib; let
 in {
   options.modules.alacritty = {enable = mkEnableOption "alacritty";};
   config = mkIf cfg.enable {
-    # virtualisation.alacritty.enable = true;
     programs.alacritty = {
       enable = true;
       settings = {

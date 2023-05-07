@@ -6,13 +6,6 @@
 }:
 with lib; let
   cfg = config.modules.jetbrains;
-
-  # packageOverrides = pkgs: {
-  #     pycharm-professional = jetbrains.pycharm-professional.override {
-  #         buildInputs = with pkgs; [ glibc ];
-  #     };
-  # };
-
   pycharm-professional =
     pkgs.jetbrains.pycharm-professional.overrideAttrs
     (finalAttrs: previousAttrs: {

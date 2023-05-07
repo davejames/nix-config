@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }: {
@@ -10,12 +9,22 @@
   boot = {
     cleanTmpDir = true;
     initrd = {
-      availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
+      availableKernelModules = [
+        "xhci_pci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "rtsx_pci_sdmmc"
+      ];
       kernelModules = [];
-      secrets = {"/crypto_keyfile.bin" = null;};
+      secrets = {
+        "/crypto_keyfile.bin" = null;
+      };
       luks.devices = {
         "luks-126431dc-7e42-4de4-8cdc-b7739d334c6a".device = "/dev/disk/by-uuid/126431dc-7e42-4de4-8cdc-b7739d334c6a";
         "luks-126431dc-7e42-4de4-8cdc-b7739d334c6a".keyFile = "/crypto_keyfile.bin";
+        "luks-b4f14503-410f-48ed-9469-37ccb3d73402".device = "/dev/disk/by-uuid/b4f14503-410f-48ed-9469-37ccb3d73402";
       };
     };
     kernelModules = ["kvm-intel"];
@@ -42,8 +51,6 @@
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."luks-b4f14503-410f-48ed-9469-37ccb3d73402".device = "/dev/disk/by-uuid/b4f14503-410f-48ed-9469-37ccb3d73402";
-
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/B6E4-F68B";
     fsType = "vfat";
@@ -55,12 +62,16 @@
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  networking.networkmanager.enable = true;
+  networking = with lib; {
+    useDHCP = mkDefault false;
+    interfaces = {
+      eno2.useDHCP = mkDefault true;
+      wlo1.useDHCP = mkDefault true;
+    };
+    networkmanager.enable = true;
+  };
+
   programs.nm-applet.enable = true;
-  # networking.interfaces.eno2.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp58s0u2u4.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlo1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

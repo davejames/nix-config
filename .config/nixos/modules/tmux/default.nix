@@ -17,7 +17,6 @@ with lib; let
       sha256 = "sha256-LErGRg9fMcQsU8EFx3QJaNnRsEZyhxyjnneJaZ4M9cs=";
     };
   };
-
   tmuxPlugins = pkgs.tmuxPlugins // {treemux = treemuxCustom;};
 in {
   options.modules.tmux = {enable = mkEnableOption "tmux";};
@@ -29,7 +28,6 @@ in {
         tmux_conf_24b_colour=auto
         set -g @plugin 'kiyoon/treemux'
       '';
-
       plugins = with tmuxPlugins; [treemux];
     };
   };

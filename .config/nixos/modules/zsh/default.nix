@@ -9,7 +9,11 @@ with lib; let
 in {
   options.modules.zsh = {enable = mkEnableOption "zsh";};
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [zsh fzf fd];
+    home.packages = with pkgs; [
+      zsh
+      fzf
+      fd
+    ];
 
     programs.direnv = {
       enable = true;
@@ -42,8 +46,6 @@ in {
         SPACESHIP_DIR_TRUNC_REPO = 0;
       };
 
-      initExtra = "";
-
       history = {
         save = 1000;
         size = 1000;
@@ -55,7 +57,10 @@ in {
         disp = ''
           echo 'laptop
           home
-          work' | fzf --height=40% --layout=reverse --info=inline --border --margin=1 --padding=1 | xargs $HOME/.config/shellscripts/display.sh'';
+          work' | \
+          fzf --height=40% --layout=reverse --info=inline --border --margin=1 --padding=1 | \
+          xargs $HOME/.config/shellscripts/display.sh
+        '';
         search = "$HOME/.config/shellscripts/filesearch.sh";
         pre-commit = "~/dockerfiles/pre-commit.sh";
 
@@ -63,7 +68,6 @@ in {
         ls = "exa --icons";
       };
 
-      # Source all plugins, nix-style
       plugins = with pkgs; [
         {
           name = "spaceship-prompt";

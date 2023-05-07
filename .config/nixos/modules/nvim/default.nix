@@ -13,21 +13,9 @@ with lib; let
       owner = "zbirenbaum";
       repo = "copilot.lua";
       rev = "a4a37dda9e48986e5d2a90d6a3cbc88fca241dbb";
-      # sha256 = pkgs.lib.fakeSha256;
       sha256 = "sha256-ttF9LW6PNKk/BBWET2BUqtq5f7OIZ7ohtQevAaP8srg=";
     };
   };
-
-  # custom-neovim = pkgs.neovim.overrideAttrs (oldAttrs: {
-  #     version = "0.8.3";
-  #     src = pkgs.fetchFromGitHub {
-  #         owner = "neovim";
-  #         repo = "neovim";
-  #         rev = "v0.8.3";
-  #         sha256 = "sha256-ItJ8aX/WUfcAovxRsXXyWKBAI92hFloYIZiv7viPIdQ=";
-  #     };
-  #     buildInputs = pkgs.neovim.buildInputs ++ [ pkgs.python3 ];
-  # });
 
   custom-nvim-lspconfig =
     pkgs.vimPlugins.nvim-lspconfig.overrideAttrs
@@ -47,7 +35,6 @@ with lib; let
       owner = "simrat39";
       repo = "symbols-outline.nvim";
       rev = "512791925d57a61c545bc303356e8a8f7869763c";
-      #sha256 = lib.fakeSha256;
       sha256 = "sha256-Kori/wRtg/bz4luU5esUwIaZ+4G6Ilb4T02xE0J+hYU=";
     };
   });
@@ -61,44 +48,33 @@ with lib; let
 in {
   options.modules.nvim = {enable = mkEnableOption "nvim";};
   config = mkIf cfg.enable {
-    home.file.".config/nvim/settings.lua".source = ./init.lua;
-
-    home.packages = with pkgs; [
-      rnix-lsp
-      nixfmt
-      nil # Nix
-      sumneko-lua-language-server
-      stylua # Lua
-      nnn # file manager
-      ripgrep
-      xclip
-      fd
-      nodejs-slim
-      nodePackages.pyright
-      nodePackages.dockerfile-language-server-nodejs
-      nodePackages.yaml-language-server
-    ];
-
-    # programs.fish = {
-    #     #initExtra = ''
-    #     #    export EDITOR="nvim"
-    #     #'';
-    #
-    #     # shellAliases = {
-    #     #     h = "nvim -i NONE";
-    #     #     vim = "nvim -i NONE";
-    #     #     nvim = "nvim -i NONE";
-    #     # };
-    # };
-
+    home = {
+      file.".config/nvim/settings.lua".source = ./init.lua;
+      packages = with pkgs; [
+        rnix-lsp
+        nixfmt
+        alejandra
+        nil # Nix
+        sumneko-lua-language-server
+        stylua # Lua
+        nnn # file manager
+        ripgrep
+        xclip
+        fd
+        nodejs-slim
+        nodePackages.pyright
+        nodePackages.dockerfile-language-server-nodejs
+        nodePackages.yaml-language-server
+      ];
+    };
     programs.neovim = {
       enable = true;
-      # package = custom-neovim;
       plugins = with vimPlugins; [
         vim-nix
         plenary-nvim
         nvim-web-devicons
         editorconfig-nvim
+        telescope-nvim
         {
           plugin = tokyonight-nvim;
           config = "colorscheme tokyonight-storm";
@@ -112,10 +88,6 @@ in {
             }
             EOF
           '';
-        }
-        {
-          plugin = editorconfig-nvim;
-          # config = "lua require('editorconfig').setup{}";
         }
         {
           plugin = lualine-nvim;
@@ -171,10 +143,6 @@ in {
         {
           plugin = comment-nvim;
           config = "lua require('Comment').setup{}";
-        }
-        {
-          plugin = telescope-nvim;
-          #config = "lua require('telescope').setup()";
         }
         {
           plugin = telescope-file-browser-nvim;
