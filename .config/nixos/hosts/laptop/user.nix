@@ -15,6 +15,7 @@
         #fish.enable = true;
         zsh.enable = true;
         shellScripts.enable = true;
+        ssh.enable = true;
         # postgresql.enable = true;
         # cli
     };

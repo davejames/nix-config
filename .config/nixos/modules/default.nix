@@ -21,6 +21,7 @@
         ./docker
         ./tmux
         ./scripts
+        ./ssh
         # ./postgresql
         # ./gpg
         # ./direnv
