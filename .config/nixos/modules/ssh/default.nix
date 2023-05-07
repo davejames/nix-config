@@ -7,15 +7,22 @@ in {
     options.modules.ssh = { enable = mkEnableOption "ssh"; };
     config = mkIf cfg.enable {
 
-        home.file.".ssh/config".source = ./config/config;
-        home.file.".ssh/config.d/willdoo".source = ./config/config.d/willdoo;
-        home.file.".ssh/config.d/djdc".source = ./config/config.d/djdc;
-        home.file.".ssh/config.d/gitproviders".source = ./config/config.d/gitproviders;
-        home.file.".ssh/config.d/sis".source = ./config/config.d/sis;
-        
-        home.packages = with pkgs; [
-            ssh-ident
-        ];
+        home.file.".ssh/config.d/willdooit.conf".source = ./config/config.d/willdooit.conf;
+        home.file.".ssh/config.d/djdc.conf".source = ./config/config.d/djdc.conf;
+        home.file.".ssh/config.d/gitproviders.conf".source = ./config/config.d/gitproviders.conf;
+        home.file.".ssh/config.d/sis.conf".source = ./config/config.d/sis.conf;
 
+        programs.ssh = {
+            enable = true;
+            includes = [
+                "config.d/gitproviders.conf"
+                "config.d/willdooit.conf"
+                "config.d/djdc.conf"
+                "config.d/sis.conf"
+            ];
+            extraOptionOverrides = {
+                "sendEnv" = "PAGER GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL";
+            };
+        };
     };
 }

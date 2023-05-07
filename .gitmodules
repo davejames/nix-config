@@ -1,7 +1,3 @@
-[submodule ".config/nixos/flakes"]
-	path = .config/nixos/flakes
-	url = git@github.com:davejames/nix-flakes.git
-	branch = main
 [submodule ".config/nixos/modules/ssh/config"]
 	path = .config/nixos/modules/ssh/config
 	url = git@github.com:davejames/sshconfig
