@@ -53,6 +53,7 @@ in {
       };
 
       shellAliases = {
+        pre-commit = "~/dockerfiles/pre-commit.sh";
         cgit = "/etc/profiles/per-user/djames/bin/git --git-dir=$HOME/.config/dotfiles-git/ --work-tree=$HOME";
         disp = ''
           echo 'laptop
@@ -61,12 +62,12 @@ in {
           fzf --height=40% --layout=reverse --info=inline --border --margin=1 --padding=1 | \
           xargs $HOME/.config/shellscripts/display.sh
         '';
-        search = "$HOME/.config/shellscripts/filesearch.sh";
-        pre-commit = "~/dockerfiles/pre-commit.sh";
 
         cat = "bat --paging=never --style=plain";
         ls = "exa --icons";
 
+        f = "nvim $(fd --type f --strip-cwd-prefix | fzf --border --preview 'bat --color=always {}')";
+        s = "$HOME/.config/shellscripts/filesearch.sh";
         v = "tmux attach -t `basename $PWD` || tmux new -s `basename $PWD` 'nvim .'";
         pc = "tmux attach -t pycharm || tmux new -s pycharm -d 'pycharm-professional .'";
       };
