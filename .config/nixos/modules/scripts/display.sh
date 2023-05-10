@@ -14,13 +14,6 @@ elif [ "$1" = "work" ]; then
     POS1="0x0 --rotate normal"
     POS2="3840x720 --rotate normal"
     POSB="6400x1080 --rotate normal"
-# elif [ "$1" = "work-downstairs" ]; then
-#    MODEBUILTIN="1920x1080"
-#    MODE1="1920x1080"
-#    MODE2="1920x1080"
-#    POS1="0x0 --rotate normal"
-#    POS2="3840x0 --rotate normal"
-#    POSB="1920x0 --rotate normal"
 else
     echo "Invalid argument. Usage: $0 home|work"
     exit 1
@@ -64,7 +57,11 @@ if [ "$DP1_NAME" != "" ] && [ "$DP2_NAME" != "" ]; then
     xrandr --output eDP1 --primary --mode ${MODEBUILTIN} --pos ${POSB} \
            --output ${DP1_NAME} --mode ${MODE1} --pos ${POS1} \
            --output ${DP2_NAME} --mode ${MODE2} --pos ${POS2}
-    qtile cmd-obj -o cmd -f reload_config
 else
     echo "Could not find DP-X-1 and DP-X-2 displays"
+    xrandr --auto
 fi
+
+echo "Reloading Qtile"
+qtile cmd-obj -o cmd -f reload_config
+

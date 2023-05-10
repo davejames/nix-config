@@ -17,6 +17,16 @@ with lib; let
     };
   };
 
+  nvim-tree-remote = pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-tree-remote";
+    src = pkgs.fetchFromGitHub {
+      owner = "kiyoon";
+      repo = "nvim-tree-remote.nvim";
+      rev = "294432a0e8a1f09be4db0a07029b2d1489a28d2f";
+      sha256 = "sha256-4kWbnaBQoxiomZSQJkOLN20t8ZzZaXUAshcgfggKWbU=";
+    };
+  };
+
   custom-nvim-lspconfig =
     pkgs.vimPlugins.nvim-lspconfig.overrideAttrs
     (oldAttrs: {
@@ -61,6 +71,8 @@ in {
         ripgrep
         xclip
         fd
+        tree-sitter
+        gcc
         nodejs-slim
         nodePackages.pyright
         nodePackages.dockerfile-language-server-nodejs
@@ -106,6 +118,10 @@ in {
           config = "lua require('nvim-autopairs').setup{}";
         }
         {
+          plugin = nvim-tree-remote;
+
+        }
+        {
           plugin = vim-illuminate;
           config = "lua require('illuminate').configure{}";
         }
@@ -123,6 +139,23 @@ in {
                 filetypes = {
                     ["*"] = true,
                 },
+            }
+            EOF
+          '';
+        }
+        {
+          plugin = gitsigns-nvim;
+          config = ''
+            lua << EOF
+            require('gitsigns').setup {
+              current_line_blame = true,
+              current_line_blame_opts = {
+                virt_text = true,
+                virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+                delay = 1000,
+                ignore_whitespace = true,
+              },
+              current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
             }
             EOF
           '';

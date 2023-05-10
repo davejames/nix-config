@@ -21,14 +21,51 @@ with lib; let
 in {
   options.modules.tmux = {enable = mkEnableOption "tmux";};
   config = mkIf cfg.enable {
+    programs.neovim.enable = true;
     programs.tmux = {
       enable = true;
       terminal = "screen-256color";
       extraConfig = ''
         tmux_conf_24b_colour=auto
-        set -g @plugin 'kiyoon/treemux'
+        set-option -sa terminal-overrides ',alacritty:RGB'
+        set-option -sg escape-time 10
+
+        # remap prefix from 'C-b' to 'C-a'
+        unbind C-b
+        set-option -g prefix C-a
+        bind-key C-a send-prefix
+
+        # split panes using | and -
+        bind | split-window -h
+        bind - split-window -v
+        unbind '"'
+        unbind %
+
+        # switch panes using Alt-arrow without prefix
+        bind -n M-Left select-pane -L
+        bind -n M-Right select-pane -R
+        bind -n M-Up select-pane -U
+        bind -n M-Down select-pane -D
+
+        # Enable mouse control
+        set -g mouse on
+
+        # don't rename windows automatically
+        set-option -g allow-rename off
       '';
-      plugins = with tmuxPlugins; [treemux];
+      plugins = with tmuxPlugins; [
+        {
+          plugin = treemux;
+          extraConfig = ''
+            set -g @treemux-tree-nvim-init-file '${treemux}/configs/treemux_init.lua'
+            set -g @plugin 'kiyoon/treemux'
+          '';
+        }
+        {
+          plugin = power-theme;
+          extraConfig = "set -g @tmux_power_theme '#${config.colorScheme.colors.base0D}'";
+        }
+      ];
     };
   };
 }

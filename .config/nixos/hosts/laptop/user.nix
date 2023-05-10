@@ -1,5 +1,11 @@
-{...}: {
-  imports = [../../modules/default.nix];
+{
+  inputs,
+  ...
+}: {
+  imports = [
+    ../../modules/default.nix
+  ];
+
   config.modules = {
     git.enable = true;
     nvim.enable = true;
