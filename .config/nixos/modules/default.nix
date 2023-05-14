@@ -18,5 +18,5 @@
     inputs.nix-colors.homeManagerModule
   ];
   
-  colorScheme = inputs.nix-colors.colorSchemes.dracula;
+  colorScheme = inputs.nix-colors.colorSchemes.seti;
 }

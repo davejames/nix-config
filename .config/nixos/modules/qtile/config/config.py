@@ -16,7 +16,7 @@ screens = config.screens
 
 
 widget_defaults = dict(
-    #font="Ubuntu Bold",
+    # font="Ubuntu Bold",
     font="JetBrains Mono Bold",
     fontsize=12,
     padding=3,
