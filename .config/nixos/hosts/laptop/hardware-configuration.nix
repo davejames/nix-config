@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   modulesPath,
@@ -7,7 +8,7 @@
   imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot = {
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     initrd = {
       availableKernelModules = [
         "xhci_pci"
@@ -17,7 +18,13 @@
         "sd_mod"
         "rtsx_pci_sdmmc"
       ];
-      kernelModules = [];
+      kernelModules = [
+        "i915"
+        "nvidia"
+        "nvidia_modeset"
+        "nvidia_uvm"
+        "nvidia_drm"
+      ];
       secrets = {
         "/crypto_keyfile.bin" = null;
       };
@@ -28,6 +35,11 @@
       };
     };
     kernelModules = ["kvm-intel"];
+    kernelParams = [
+      "i915.enable_fbc=1"
+      "i915.enable_psr=2"
+      "i915.enable_guc=2"
+    ];
     extraModulePackages = [];
     loader = {
       timeout = 2;
@@ -84,6 +96,11 @@
     opengl = {
       enable = true;
       driSupport = true;
+      extraPackages = with pkgs; [
+        vaapiIntel
+        libvdpau-va-gl
+        intel-media-driver
+      ];
     };
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -91,6 +108,10 @@
     };
     bluetooth.enable = true;
     pulseaudio.enable = false;
+  };
+
+  environment.variables = {
+    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
   };
 
   services = {
