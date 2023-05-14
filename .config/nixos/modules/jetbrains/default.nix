@@ -6,29 +6,35 @@
 }:
 with lib; let
   cfg = config.modules.jetbrains;
-  pycharm-professional =
-    pkgs.jetbrains.pycharm-professional.overrideAttrs
-    (finalAttrs: previousAttrs: {
-      buildInput = with pkgs; [glibc gcc nodejs-slim];
-    });
-
-  copilot-agent-linux = pkgs.callPackage ../../packages/copilot-agent-linux.nix {};
+  # Until this PR is merged, we need to use a fork of nixpkgs
+  # https://github.com/NixOS/nixpkgs/pull/223593
+  pr = import
+    (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/pull/223593/head.tar.gz";
+      sha256 = "sha256:10jhf5y261rgj8kc7sb9fmg68h2j4nnylb4ci0dxykkry4zd6r62";
+    })
+    {
+      config = pkgs.config;
+      localSystem = { system = "x86_64-linux"; };
+    };
 in {
   options.modules.jetbrains = {
     pycharm = {enable = mkEnableOption "pycharm";};
     datagrip = {enable = mkEnableOption "datagrip";};
   };
+
   config = mkMerge [
     (mkIf
       cfg.pycharm.enable
       {
         home = {
-          file."${".local/share/JetBrains/PyCharm2022.3"
-            + "/${copilot-agent-linux.pname}/copilot-agent/bin"
-            + "/${copilot-agent-linux.name}"}".source =
-            "${copilot-agent-linux}/bin"
-            + "/${copilot-agent-linux.name}";
-          packages = [pycharm-professional];
+          packages = [
+            (
+              pr.jetbrains.plugins.addPlugins
+              pr.jetbrains.pycharm-professional
+              [ "github-copilot" ]
+            )
+          ];
         };
       })
 
@@ -36,12 +42,13 @@ in {
       cfg.datagrip.enable
       {
         home = {
-          file."${".local/share/JetBrains/DataGrip2022.3"
-            + "/${copilot-agent-linux.pname}/copilot-agent/bin"
-            + "/${copilot-agent-linux.name}"}".source =
-            "${copilot-agent-linux}/bin"
-            + "/${copilot-agent-linux.name}";
-          packages = with pkgs; [jetbrains.datagrip];
+          packages = [
+            (
+              pr.jetbrains.plugins.addPlugins
+              pr.jetbrains.datagrip
+              [ "github-copilot" ]
+            )
+          ];
         };
       })
   ];
