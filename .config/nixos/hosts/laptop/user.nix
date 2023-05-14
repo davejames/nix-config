@@ -7,6 +7,7 @@
   ];
 
   config.modules = {
+    qtile.enable = true;
     git.enable = true;
     nvim.enable = true;
     jetbrains = {

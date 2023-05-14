@@ -29,6 +29,7 @@
           # Hardware config (bootloader, kernel modules, filesystems, etc)
           # DO NOT USE MY HARDWARE CONFIG!! USE YOUR OWN!!
           (./. + "/hosts/${hostname}/hardware-configuration.nix")
+          (./. + "/hosts/${hostname}/system-configuration.nix")
           home-manager.nixosModules.home-manager
           {
             home-manager = {

@@ -187,6 +187,26 @@ class ColourScheme:
     def __str__(self):
         return ", ".join(self.colours)
 
+    def darken_colour(self, hex_colour_code, darkening_percentage=50):
+        # Remove the '#' from the beginning of the colour code if it exists
+        hex_colour_code = hex_colour_code.lstrip("#")
+
+        # Convert the hexadecimal colour code to RGB
+        r, g, b = tuple(int(hex_colour_code[i : i + 2], 16) for i in (0, 2, 4))
+
+        # Reduce each of the RGB components by the darkening percentage
+        r = int(r * (1 - darkening_percentage / 100))
+        g = int(g * (1 - darkening_percentage / 100))
+        b = int(b * (1 - darkening_percentage / 100))
+
+        # Ensure the values are within the allowed range
+        r = max(0, min(r, 255))
+        g = max(0, min(g, 255))
+        b = max(0, min(b, 255))
+
+        # Convert the RGB components back to a hexadecimal colour code
+        return "#{:02x}{:02x}{:02x}".format(r, g, b)
+
     def test_colours(self, raise_on_error=True):
         success = True
         colours = []
@@ -236,10 +256,15 @@ class ColourScheme:
         """
         return the colour list in the format expected by qtile
         """
-        return [
-            isinstance(colour, list) and colour or [colour, colour]
-            for colour in self.colours
-        ]
+        result = []
+
+        for colour in self.colours:
+            if isinstance(colour, list):
+                result.append(colour)
+            else:
+                result.append([colour, self.darken_colour(colour)])
+
+        return result
 
 
 #
