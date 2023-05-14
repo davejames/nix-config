@@ -13,6 +13,7 @@
 #nm-applet &
 flameshot &
 keepassxc &
+blueman-applet &
 #gnome-keyring-daemon --start
 #nextcloud &
 #keepassxc &
