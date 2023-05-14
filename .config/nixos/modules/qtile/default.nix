@@ -20,11 +20,13 @@ with lib; let
   ];
 in {
   options.modules.qtile = {enable = mkEnableOption "qtile";};
-
   config = mkIf cfg.enable {
     home.file = builtins.listToAttrs (map (filename: {
-      name = ".config/qtile/${filename}";
-      value = { source = ./config/${filename}; };
+      name = builtins.replaceStrings ["/"] ["_"] filename;
+      value = { 
+        target = ".config/qtile/${filename}";
+        source = ./config/${filename};
+      };
     }) qtileConfigFiles);
   };
 }

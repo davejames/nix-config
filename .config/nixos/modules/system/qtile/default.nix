@@ -5,7 +5,7 @@
   ...
 }:
 with lib; let
-  cfg = config.modules.system.qtile;
+  cfg = config.modules.qtile;
 in {
   options.modules.qtile = {enable = mkEnableOption "qtile";};
 
