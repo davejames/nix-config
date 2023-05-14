@@ -4,6 +4,7 @@
 }: {
   home.stateVersion = "22.11";
   imports = [
+    ./qtile
     ./alacritty
     ./nvim
     ./fish

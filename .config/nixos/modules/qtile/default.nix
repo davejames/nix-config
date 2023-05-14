@@ -27,41 +27,4 @@ in {
       value = { source = ./config/${filename}; };
     }) qtileConfigFiles);
   };
-
-  services.xserver = {
-    enable = true;
-    desktopManager.xterm.enable = true;
-    windowManager.qtile = {
-      enable = true;
-      backend = "x11";
-      extraPackages = python310Packages:
-        with python310Packages; [
-          qtile-extras
-          psutil
-          dbus-python
-          pyxdg
-          mpd2
-          # python-wifi
-          # iwlib
-          dateutil
-          keyring
-          jsons
-        ];
-    };
-    displayManager = {
-      lightdm = {
-        enable = true;
-        background = "/etc/lightdm/background.jpg";
-        greeters.enso = {
-          enable = true;
-          blur = true;
-        };
-      };
-      defaultSession = "none+qtile";
-    };
-  };
-  # config = mkIf cfg.enable {
-  #   home.file.".config/qtile/__init__.py".source = ./config/__init__.py;
-  #   home.file.".config/qtile/bindings.py".source = ./config/bindings.py;
-  # };
 }
