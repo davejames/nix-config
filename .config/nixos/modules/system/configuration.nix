@@ -12,6 +12,7 @@
       brave
       zerotierone
       nano
+      navi
       libreoffice
       devbox
       zip
@@ -26,9 +27,12 @@
       bitwarden-cli
       postman
       insomnia
+      pgcli
+      pspg
       imagemagick
       exa
       bat
+      fselect
       nodePackages.prettier
       nodePackages.prettier-plugin-toml
       nixpkgs-fmt
@@ -54,6 +58,8 @@
       via
       htop
       iotop
+      btop
+      bandwhich
       rsync
       keepassxc
       conky
