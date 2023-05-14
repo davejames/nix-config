@@ -70,6 +70,7 @@ in {
         s = "$HOME/.config/shellscripts/filesearch.sh";
         v = "tmux attach -t `basename $PWD` || tmux new -s `basename $PWD` 'nvim .'";
         pc = "tmux attach -t pycharm || tmux new -s pycharm -d 'pycharm-professional .'";
+        p = "pm go $(pm list | fzf)";
       };
 
       plugins = with pkgs; [
@@ -82,6 +83,16 @@ in {
             sha256 = "sha256-uFmGld5paCLNnE9yWgBLtthEBfwwMzlGCJFX6KqGJdw=";
           };
           file = "spaceship.zsh";
+        }
+        {
+          name = "pm";
+          src = fetchFromGitHub {
+            owner = "Angelmmiguel";
+            repo = "pm";
+            rev = "4de2ab828a90d377b34fdbde18c85f710ab28597";
+            sha256 = "sha256-vFy5SRa6mO5AKonkkLeLqHd5HVC/nHf2A84D86GxO4w=";
+          };
+          file = "zsh/pm.zsh";
         }
         {
           name = "zsh-vi-mode";
