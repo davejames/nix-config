@@ -119,7 +119,6 @@ in {
         }
         {
           plugin = nvim-tree-remote;
-
         }
         {
           plugin = vim-illuminate;

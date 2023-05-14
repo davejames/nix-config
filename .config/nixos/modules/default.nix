@@ -1,7 +1,4 @@
-{
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   home.stateVersion = "22.11";
   imports = [
     ./qtile
@@ -17,6 +14,6 @@
     ./ssh
     inputs.nix-colors.homeManagerModule
   ];
-  
+
   colorScheme = inputs.nix-colors.colorSchemes.seti;
 }
