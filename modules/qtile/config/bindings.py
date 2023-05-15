@@ -1,4 +1,3 @@
-from libqtile import extension
 from libqtile.config import Key, Drag, Click
 from libqtile.lazy import lazy
 

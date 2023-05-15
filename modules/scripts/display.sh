@@ -64,4 +64,3 @@ fi
 
 echo "Reloading Qtile"
 qtile cmd-obj -o cmd -f reload_config
-

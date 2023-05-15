@@ -87,4 +87,3 @@ o.pumheight = 6
 o.splitright = true
 o.splitbelow = true
 o.completeopt = "menuone,noselect"
-

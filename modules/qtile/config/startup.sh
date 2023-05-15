@@ -4,4 +4,3 @@
 flameshot &
 keepassxc &
 blueman-applet &
-
