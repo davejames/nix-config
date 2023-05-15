@@ -25,7 +25,7 @@ def generate_bar_elements(
         # Terminal Icon
         widget.Sep(
             linewidth=0,
-            padding=int(sep_padding * 1.5),
+            padding=int(sep_padding * 4.5),
             foreground=base_colour,
             background=base_colour,
         ),
@@ -39,20 +39,20 @@ def generate_bar_elements(
         ),
         widget.Sep(
             linewidth=0,
-            padding=int(sep_padding * 1.5),
+            padding=int(sep_padding * 4.5),
             foreground=base_colour,
             background=base_colour,
         ),
         # Layout switcher
         widget.CurrentLayoutIcon(
             custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
-            foreground=colour_scheme.col(2, gradient=False),
+            foreground=colour_scheme.col(4, gradient=False),
             background=colour_scheme.col(0),
             padding=icon_padding,
             scale=0.7,
         ),
         widget.CurrentLayout(
-            foreground=colour_scheme.col(2, gradient=False),
+            foreground=colour_scheme.col(4, gradient=False),
             background=colour_scheme.col(0),
             padding=widget_padding,
         ),
@@ -66,6 +66,7 @@ def generate_bar_elements(
         widget.GroupBox(
             fontsize=8,
             rounded=True,
+            foreground=colour_scheme.col(4, gradient=False),
             background=base_colour,
             active=colour_scheme.col(6, gradient=False),
             inactive=colour_scheme.col(2, gradient=False),
@@ -204,13 +205,13 @@ def generate_bar_elements(
             font="Font Awesome 6 Free",
             text="\uf053",
             padding=icon_padding,
-            foreground=colour_scheme.col(7, gradient=False),
+            foreground=colour_scheme.col(8, gradient=False),
             background=colour_scheme.col(0),
         ),
         widget.Systray(
             icon_size=20,
             padding=widget_padding,
-            foreground=colour_scheme.col(7, gradient=False),
+            foreground=colour_scheme.col(8, gradient=False),
             background=colour_scheme.col(0),
         )
         if monitor_is_primary

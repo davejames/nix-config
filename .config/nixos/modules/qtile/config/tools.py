@@ -22,6 +22,7 @@ class Config:
         default_margin,
         default_border_width,
         layouts,
+        widget_defaults,
     ):
         self.mod = mod
         self.colour_scheme = colour_scheme
@@ -37,6 +38,7 @@ class Config:
         self.default_margin = default_margin
         self.default_border_width = default_border_width
         self.layouts = layouts
+        self.widget_defaults = widget_defaults
 
         self.wallpapers = {}
         self.init_wallpapers()
@@ -115,12 +117,11 @@ class Config:
         return chosen_wallpaper
 
     def configure_screens(self):
+        sep_padding = self.widget_defaults["sep_padding"]
+        icon_padding = self.widget_defaults["icon_padding"]
+        widget_padding = self.widget_defaults["widget_padding"]
         try:
             for monitor_name, monitor_data in self.connected_monitors.items():
-                sep_padding = 10
-                icon_padding = 5
-                widget_padding = 10
-
                 self.screens.append(
                     Screen(
                         wallpaper=self.get_random_wallpaper(

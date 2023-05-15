@@ -34,6 +34,18 @@ in {
 
           from tools import Config, ColourScheme
 
+          widget_defaults = dict(
+              font="JetBrains Mono Bold",
+              fontsize=12,
+              padding=3,
+              background=config.colour_scheme.col(1, gradient=False),
+
+              # Menubar elements
+              sep_padding=5,
+              icon_padding=10,
+              widget_padding=10,
+          )
+
           colour_scheme = ColourScheme(
               "#${config.colorScheme.colors.base00}",
               "#${config.colorScheme.colors.base01}",
@@ -80,6 +92,7 @@ in {
               default_margin=4,
               default_border_width=2,
               layouts=all_layouts,
+              widget_defaults=widget_defaults,
           )
         '';
       };
