@@ -1,0 +1,34 @@
+.venv/
+.direnv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+/.venv
+/.pytest_cache
+
+# Obsidian
+.obsidian/workspace/*
+.obsidian/workspace*
+.obsidian/plugins/*
+.obsidian-git-data
+Untitled*
+null*
+
+# Pycharm
+.idea
+
+# Eclipse
+.settings
+
+# Visual Studio cache/options directory
+.vs/
+.vscode
+
+# OSX Files
+.DS_Store
+.trash/
+
+# Backup files
+*~
+*.swp
