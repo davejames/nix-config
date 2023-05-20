@@ -14,11 +14,12 @@
     alacritty.enable = true;
     docker.enable = true;
     tmux.enable = true;
+    rofi.enable = true;
     zsh.enable = true;
     shellScripts.enable = true;
     ssh.enable = true;
   };
-
+  
   config.xdg.mimeApps = {
     enable = true;
     defaultApplications = {

@@ -10,6 +10,7 @@
     ./jetbrains
     ./docker
     ./tmux
+    ./rofi
     ./scripts
     ./ssh
     inputs.nix-colors.homeManagerModule
