@@ -39,6 +39,11 @@ class Config:
         self.default_border_width = default_border_width
         self.layouts = layouts
         self.widget_defaults = widget_defaults
+        background_colour = self.widget_defaults.get("background")
+        if background_colour:
+            self.widget_defaults["background"] = self.colour_scheme.col(
+                background_colour, gradient=False
+            )
 
         self.wallpapers = {}
         self.init_wallpapers()
@@ -55,8 +60,7 @@ class Config:
             self.keybindings.append(keybinding)
 
     def update_mousebindings(self, mousebindings: list):
-        for mousebinding in mousebindings:
-            # TODO: implement some kind of testing
+        for mousebinding in mousebindings:  # TODO: implement some kind of testing
             self.mousebindings.append(mousebinding)
 
     def update_groups(self, groups: list):
@@ -76,6 +80,8 @@ class Config:
             hkey = str(idx + 1)[-1]
             if idx == 10:
                 hkey = "grave"
+            elif idx > 10:
+                break
             self.update_keybindings(
                 [
                     # mod1 + letter of group = switch to group

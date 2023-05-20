@@ -1,6 +1,7 @@
 import os
 
 from libqtile import qtile
+from libqtile.lazy import lazy
 
 from qtile_extras import widget
 
@@ -103,7 +104,7 @@ def generate_bar_elements(
             border_width=0,
             line_width=1,
             mouse_callbacks={
-                "Button1": lambda: qtile.cmd_spawn(config.terminal + " htop")
+                "Button1": lazy.group['scratchpad'].dropdown_toggle('btop')
             },
         ),
         widget.Sep(
@@ -148,6 +149,9 @@ def generate_bar_elements(
             padding=widget_padding,
             foreground=colour_scheme.col(7, gradient=False),
             background=colour_scheme.col(8),
+            mouse_callbacks={
+                "Button1": lazy.group['scratchpad'].dropdown_toggle('khal')
+            },
         ),
         widget.Sep(
             linewidth=0,

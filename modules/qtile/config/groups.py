@@ -1,4 +1,4 @@
-from libqtile.config import Group
+from libqtile.config import Group, ScratchPad, DropDown
 
 # from params import filtered_layouts
 
@@ -45,5 +45,26 @@ def init_groups(config):
                 layout="max",
                 # layouts=filtered_layouts,
             ),
+            ScratchPad(
+                'scratchpad', [
+                DropDown(
+                    "khal",
+                    [
+                        config.terminal,
+                        "-e",
+                        "ikhal",
+                    ],
+                    x=0.6, width=0.35, height=0.4, opacity=1
+                ),
+                DropDown(
+                    "btop",
+                    [
+                        config.terminal,
+                        "-e",
+                        "btop",
+                    ],
+                    x=0.1, width=0.8, height=0.8, opacity=1
+                ),
+            ]),
         ]
     )

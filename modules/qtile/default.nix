@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   ...
@@ -19,6 +20,13 @@ with lib; let
 in {
   options.modules.qtile = {enable = mkEnableOption "qtile";};
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      khal
+    ];
+      services.betterlockscreen = {
+        enable = true;
+        inactiveInterval = 10;
+      };
     home.file =
       builtins.listToAttrs (map (filename: {
           name = builtins.replaceStrings ["/"] ["_"] filename;
@@ -36,9 +44,9 @@ in {
 
           widget_defaults = dict(
               font="JetBrains Mono Bold",
-              fontsize=12,
+              fontsize=16,
               padding=3,
-              background=config.colour_scheme.col(1, gradient=False),
+              background=1,
 
               # Menubar elements
               sep_padding=5,
