@@ -59,7 +59,6 @@ in {
   options.modules.nvim = {enable = mkEnableOption "nvim";};
   config = mkIf cfg.enable {
     home = {
-      file.".config/nvim/settings.lua".source = ./init.lua;
       packages = with pkgs; [
         rnix-lsp
         nixfmt
@@ -81,15 +80,126 @@ in {
     };
     programs.neovim = {
       enable = true;
+      extraLuaConfig = ''
+        local o = vim.opt
+        local g = vim.g
+
+        -- Autocmds
+        vim.cmd [[
+        augroup CursorLine
+            au!
+            au VimEnter * setlocal cursorline
+            au WinEnter * setlocal cursorline
+            au BufWinEnter * setlocal cursorline
+            au WinLeave * setlocal nocursorline
+        augroup END
+        autocmd FileType nix setlocal shiftwidth=4
+        colorscheme tokyonight-storm
+        ]]
+
+        -- Keybinds
+        local map = vim.api.nvim_set_keymap
+        local opts = {
+          silent = true,
+          noremap = true,
+        }
+
+        -- map("n", "<C-h>", "<C-w>h", opts)
+        --map("n", "<C-j>", "<C-w>j", opts)
+        -- map("n", "<C-k>", "<C-w>k", opts)
+        -- map("n", "<C-l>", "<C-w>l", opts)
+        map('n', '<C-g>', ':Telescope live_grep path=%:p:h select_buffer=true <CR>', opts)
+        map('n', '<C-f>', ':Telescope find_files path=%:p:h select_buffer=true <CR>', opts)
+        map('n', '<C-b>', ':Telescope file_browser respect_gitignore=false path=%:p:h grouped=true select_buffer=true git_status=true <CR>', { noremap = true } )
+        map('n', 'j', 'gj', opts)
+        map('n', 'k', 'gk', opts)
+        map('n', ';', ':', { noremap = true } )
+
+        map('n', '<C-h>', ':BufferLineCyclePrev <CR>', opts)
+        map('n', '<C-l>', ':BufferLineCycleNext <CR>', opts)
+        map('n', '<C-x>', ':bd <CR>', opts)
+        map('n', '<C-_>', 'gc', opts)
+
+        map('n', '<leader>]', ':SymbolsOutline <CR>', opts)
+
+        g.mapleader = '\\'
+
+        -- Performance
+        o.lazyredraw = true;
+        o.shell = "zsh"
+        o.shadafile = "NONE"
+
+        -- Colors
+        o.termguicolors = true
+
+        -- Undo files
+        o.undofile = true
+
+        -- Indentation
+        o.smartindent = true
+        o.tabstop = 4
+        o.shiftwidth = 4
+        o.shiftround = true
+        o.expandtab = true
+        o.scrolloff = 3
+
+        -- Set clipboard to use system clipboard
+        o.clipboard = "unnamedplus"
+
+        -- Use mouse
+        o.mouse = "a"
+
+        -- Nicer UI settings
+        o.cursorline = true
+        o.relativenumber = true
+        o.number = true
+
+        -- Get rid of annoying viminfo file
+        o.viminfo = ""
+        o.viminfofile = "NONE"
+
+        -- Miscellaneous quality of life
+        o.ignorecase = true
+        o.ttimeoutlen = 5
+        o.hidden = true
+        o.shortmess = "atI"
+        o.wrap = false
+        o.backup = false
+        o.writebackup = false
+        o.errorbells = false
+        o.swapfile = false
+        o.showmode = false
+        o.laststatus = 3
+        o.pumheight = 6
+        o.splitright = true
+        o.splitbelow = true
+        o.completeopt = "menuone,noselect"
+      '';
       plugins = with vimPlugins; [
         vim-nix
         plenary-nvim
         nvim-web-devicons
         editorconfig-nvim
-        telescope-nvim
+        tokyonight-nvim
+        
+        # Telecope and supporting plugins
+        telescope-file-browser-nvim
         {
-          plugin = tokyonight-nvim;
-          config = "colorscheme tokyonight-storm";
+          plugin = telescope-nvim;
+          config = ''
+            lua << EOF
+            require('telescope').setup {
+                extensions = {
+                    file_browser = {
+                        hijack_netrw = true,
+                        hidden = true,
+                        grouped = true,
+                    },
+                },
+            }
+            require('telescope').load_extension 'file_browser'
+            EOF
+          '';
         }
         {
           plugin = barbecue-nvim;
@@ -177,23 +287,6 @@ in {
           config = "lua require('Comment').setup{}";
         }
         {
-          plugin = telescope-file-browser-nvim;
-          config = ''
-            lua << EOF
-            require('telescope').setup {
-                extensions = {
-                    file_browser = {
-                        hijack_netrw = true,
-                        hidden = true,
-                        grouped = true,
-                    },
-                },
-            }
-            require('telescope').load_extension 'file_browser'
-            EOF
-          '';
-        }
-        {
           plugin = bufferline-nvim;
           config = ''
             lua << EOF
@@ -267,10 +360,6 @@ in {
           config = "lua require('dap-python')";
         }
       ];
-
-      extraConfig = ''
-        luafile ~/.config/nvim/settings.lua
-      '';
     };
   };
 }
