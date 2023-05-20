@@ -10,14 +10,12 @@
       firefox
       google-chrome
       brave
-      zerotierone
       nano
       navi
       libreoffice
       devbox
       zip
       unzip
-      betterlockscreen
       trilium-desktop
       obsidian
       vlc
@@ -37,6 +35,9 @@
       nodePackages.prettier-plugin-toml
       nixpkgs-fmt
       alejandra
+      black
+      gimp
+      inkscape
     ];
   };
 
@@ -50,7 +51,6 @@
       wget
       screen
       dig
-      rofi
       kitty
       arandr
       feh
@@ -63,6 +63,7 @@
       rsync
       keepassxc
       conky
+      pv
     ];
   };
 
