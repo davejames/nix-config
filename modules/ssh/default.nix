@@ -5,23 +5,21 @@
 }:
 with lib; let
   cfg = config.modules.ssh;
+  gitConfig = builtins.fetchGit {
+    url = "ssh://git@github.com/davejames/sshconfig.git";
+    rev = "7fa88993879eb381bfd1c67e01b073d8e3bf444d";
+  };
 in {
   options.modules.ssh = {enable = mkEnableOption "ssh";};
   config = mkIf cfg.enable {
     home.file = {
-      ".ssh/config.d/willdooit.conf".source = ./config/config.d/willdooit.conf;
-      ".ssh/config.d/djdc.conf".source = ./config/config.d/djdc.conf;
-      ".ssh/config.d/gitproviders.conf".source = ./config/config.d/gitproviders.conf;
-      ".ssh/config.d/sis.conf".source = ./config/config.d/sis.conf;
+      ".ssh/config.d".source = "${gitConfig}/config.d";
     };
 
     programs.ssh = {
       enable = true;
       includes = [
-        "config.d/gitproviders.conf"
-        "config.d/willdooit.conf"
-        "config.d/djdc.conf"
-        "config.d/sis.conf"
+        "config.d/*"
       ];
       extraOptionOverrides = {
         "sendEnv" = "PAGER GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL";
