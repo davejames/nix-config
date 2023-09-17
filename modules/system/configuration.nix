@@ -144,7 +144,7 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 14d";
+      options = "--delete-older-than 90d";
     };
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -154,7 +154,7 @@
   };
 
   time.timeZone = "Australia/Melbourne";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_AU.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
