@@ -23,10 +23,10 @@ in {
     home.packages = with pkgs; [
       khal
     ];
-      services.betterlockscreen = {
-        enable = true;
-        inactiveInterval = 10;
-      };
+    services.betterlockscreen = {
+      enable = true;
+      inactiveInterval = 10;
+    };
     home.file =
       builtins.listToAttrs (map (filename: {
           name = builtins.replaceStrings ["/"] ["_"] filename;

@@ -181,7 +181,7 @@ in {
         nvim-web-devicons
         editorconfig-nvim
         tokyonight-nvim
-        
+
         # Telecope and supporting plugins
         telescope-file-browser-nvim
         {

@@ -19,7 +19,7 @@
     shellScripts.enable = true;
     ssh.enable = true;
   };
-  
+
   config.xdg.mimeApps = {
     enable = true;
     defaultApplications = {

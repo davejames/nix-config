@@ -18,8 +18,9 @@ in {
         show-icons = true;
         terminal = "alacritty";
       };
-      theme = let inherit (config.lib.formats.rasi) mkLiteral; in
-      {
+      theme = let
+        inherit (config.lib.formats.rasi) mkLiteral;
+      in {
         "*" = {
           bg0 = mkLiteral "#${config.colorScheme.colors.base00}";
           bg1 = mkLiteral "#${config.colorScheme.colors.base01}";
@@ -101,7 +102,6 @@ in {
           text-color = mkLiteral "inherit";
         };
       };
-
     };
   };
 }
