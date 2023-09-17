@@ -28,7 +28,7 @@
       pgcli
       pspg
       imagemagick
-      exa
+      eza
       bat
       fselect
       nodePackages.prettier
@@ -64,6 +64,9 @@
       keepassxc
       conky
       pv
+      reptyr
+      comma
+      nix-index
     ];
   };
 
@@ -113,7 +116,7 @@
   };
 
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       openmoji-color
       (nerdfonts.override {
         fonts = [
