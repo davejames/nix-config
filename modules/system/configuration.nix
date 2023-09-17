@@ -68,6 +68,12 @@
   };
 
   services = {
+    dnsmasq = {
+      enable = true;
+      settings = {
+        address = "/willdooit.local/127.0.0.1";
+      };
+    };
     postgresql = {
       enable = true;
       ensureUsers = [
