@@ -28,7 +28,7 @@ in {
 
       enableCompletion = true;
       enableAutosuggestions = true;
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting.enable = true;
 
       oh-my-zsh = {
         enable = true;
@@ -47,9 +47,14 @@ in {
       };
 
       history = {
-        save = 1000;
-        size = 1000;
+        save = 1000000;
+        size = 1000000;
         path = "$HOME/.cache/zsh_history";
+        ignoreSpace = true;
+        ignoreAllDups = true;
+        expireDuplicatesFirst = true;
+        extended = true; # save timestamps
+        share = false; # each session has it own history
       };
 
       shellAliases = {
@@ -62,12 +67,22 @@ in {
           fzf --height=40% --layout=reverse --info=inline --border --margin=1 --padding=1 | \
           xargs $HOME/.config/shellscripts/display.sh
         '';
-
         cat = "bat --paging=never --style=plain";
-        ls = "exa --icons";
-
+        ls = "eza --icons";
         f = "nvim $(fd --type f --strip-cwd-prefix | fzf --border --preview 'bat --color=always {}')";
         s = "$HOME/.config/shellscripts/filesearch.sh";
+        vt = ''
+          session_name=$(basename "$(pwd)")
+          tmux has-session -t "$session_name" 2>/dev/null || {
+            tmux new-session -d -x "$(tput cols)" -y "$(tput lines)" -s "$session_name"
+            tmux split-pane -l 90% -v -b 'nvim .'
+            tmux split-pane -h -l 20%
+            tmux select-pane -D
+            tmux split-pane -h
+          tmux select-pane -t 0
+          }
+          tmux attach-session -t "$session_name"
+        '';
         v = "tmux attach -t `basename $PWD` || tmux new -s `basename $PWD` 'nvim .'";
         pc = "tmux attach -t pycharm || tmux new -s pycharm -d 'pycharm-professional .'";
         p = "pm go $(pm list | fzf)";
