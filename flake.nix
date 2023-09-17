@@ -3,8 +3,8 @@
 
   # All inputs for the system
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-23.05";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,7 +13,17 @@
   };
 
   # All outputs for the system (configs)
-  outputs = {home-manager, ...} @ inputs: let
+  outputs = {
+    home-manager,
+    nixpkgs-stable,
+    ...
+  } @ inputs: let
+    overlay-stable = final: prev: {
+      stable = import nixpkgs-stable {
+        system = prev.system;
+        config.allowUnfree = true;
+      };
+    };
     # This lets us reuse the code to "create" a system
     # Credits go to sioodmy on this one!
     # https://github.com/sioodmy/dotfiles/blob/main/flake.nix
@@ -23,6 +33,7 @@
         modules = [
           {
             networking.hostName = hostname;
+            nixpkgs.overlays = [overlay-stable];
           }
           # General configuration (users, networking, sound, etc)
           ./modules/system/configuration.nix
