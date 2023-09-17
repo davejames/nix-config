@@ -37,7 +37,7 @@
     kernelModules = ["kvm-intel"];
     kernelParams = [
       "i915.enable_fbc=1"
-      "i915.enable_psr=2"
+      "i915.enable_psr=0"
       "i915.enable_guc=2"
     ];
     extraModulePackages = [];
@@ -87,7 +87,10 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   sound.enable = true;
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    libvirtd.enable = true;
+  };
 
   hardware = {
     cpu.intel.updateMicrocode =
@@ -120,8 +123,6 @@
     printing.enable = true;
     blueman.enable = true;
 
-    # Enable sound with pipewire.
-    # security.rtkit.enable = true;
     pipewire = {
       enable = true;
       alsa.enable = true;
