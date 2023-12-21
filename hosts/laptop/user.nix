@@ -5,7 +5,7 @@
 
   config.modules = {
     qtile.enable = true;
-    git.enable = true;
+    willdooit.enable = true;
     nvim.enable = true;
     jetbrains = {
       pycharm.enable = true;

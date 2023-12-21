@@ -4,7 +4,7 @@
   programs.zsh.enable = true;
   users.users.djames = {
     isNormalUser = true;
-    extraGroups = ["input" "wheel" "networkmanager" "docker"];
+    extraGroups = ["input" "wheel" "networkmanager" "docker" "qemu-libvirtd" "libvirtd"];
     shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
@@ -38,6 +38,9 @@
       black
       gimp
       inkscape
+      vagrant
+      drawio
+      mongodb-compass
     ];
   };
 
@@ -139,8 +142,19 @@
   };
 
   nix = {
-    settings.auto-optimise-store = true;
-    settings.allowed-users = ["djames"];
+    settings = {
+      auto-optimise-store = true;
+      allowed-users = ["djames"];
+      trusted-substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+        "https://willdooit-dev.cachix.org"
+      ];
+      trusted-public-keys = [
+        # "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "willdooit-dev.cachix.org-1:Ls6JcovSkbkjlge0KdWMCZn32ysXnYempw9s7Ox3y5I="
+      ];
+    };
     gc = {
       automatic = true;
       dates = "weekly";

@@ -7,6 +7,7 @@
     ./fish
     ./zsh
     ./git
+    ./willdooit
     ./jetbrains
     ./docker
     ./tmux

@@ -34,12 +34,15 @@
         "luks-b4f14503-410f-48ed-9469-37ccb3d73402".device = "/dev/disk/by-uuid/b4f14503-410f-48ed-9469-37ccb3d73402";
       };
     };
-    kernelModules = ["kvm-intel"];
+    kernelModules = ["kvm-amd" "kvm-intel"];
     kernelParams = [
       "i915.enable_fbc=1"
       "i915.enable_psr=0"
       "i915.enable_guc=2"
     ];
+    kernel.sysctl = {
+      "fs.inotify.max_user_watches" = "1048576";
+    };
     extraModulePackages = [];
     loader = {
       timeout = 2;
