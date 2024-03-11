@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  
+
   programs.zsh.enable = true;
   users.users.djames = {
     isNormalUser = true;
@@ -165,7 +165,7 @@
       keep-derivations = true
     '';
   };
-  
+
   nixpkgs.config = {
    allowUnfree = true;
    permittedInsecurePackages = [

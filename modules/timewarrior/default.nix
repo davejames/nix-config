@@ -58,7 +58,7 @@ in {
     ];
     home.file.".config/timewarrior/timewarrior.cfg".text = ''
       import ${pkgs.timewarrior}/share/doc/timew/themes/dark_red.theme
-      
+
       define exclusions:
         monday    = <8:00 >18:00
         tuesday   = <8:00 >18:00

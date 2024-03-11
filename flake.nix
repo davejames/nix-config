@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-colors.url = "github:misterio77/nix-colors";
-    
+
     willdooit-dev-cli.url = "git+ssh://git@github.com/WilldooIT-Private/willdooit-dev-cli?ref=main";
     willdooit-commitizen.url = "git+ssh://git@github.com/WilldooIT-Private/willdooit-commitizen?ref=flake-fix";
     erosanix= {
