@@ -46,6 +46,9 @@ in {
       extraConfig = {
         init = {defaultBranch = "main";};
       };
+      aliases = {
+        merges = "log --oneline --decorate --color=auto --merges --first-parent";
+      };
     };
   };
 }
