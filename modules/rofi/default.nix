@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   ...
@@ -22,10 +21,10 @@ in {
         inherit (config.lib.formats.rasi) mkLiteral;
       in {
         "*" = {
-          bg0 = mkLiteral "#${config.colorScheme.colors.base00}";
-          bg1 = mkLiteral "#${config.colorScheme.colors.base01}";
-          fg0 = mkLiteral "#${config.colorScheme.colors.base02}";
-          fg1 = mkLiteral "#${config.colorScheme.colors.base09}";
+          bg0 = mkLiteral "#${config.colorScheme.palette.base00}";
+          bg1 = mkLiteral "#${config.colorScheme.palette.base01}";
+          fg0 = mkLiteral "#${config.colorScheme.palette.base02}";
+          fg1 = mkLiteral "#${config.colorScheme.palette.base09}";
 
           background-color = mkLiteral "transparent";
           text-color = mkLiteral "@fg0";
@@ -41,7 +40,7 @@ in {
 
           background-color = mkLiteral "@bg0";
           border = mkLiteral "2px";
-          border-color = mkLiteral "#${config.colorScheme.colors.base08}";
+          border-color = mkLiteral "#${config.colorScheme.palette.base08}";
         };
 
         "inputbar" = {

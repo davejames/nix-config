@@ -34,7 +34,7 @@ with lib; let
       src = pkgs.fetchFromGitHub {
         owner = "neovim";
         repo = "nvim-lspconfig";
-        rev = "e52efca5d4f5536533d447ec0d97e4d525b37ace";
+        rev = "1917b562a02f20885900b1da0f0ea25028ccedab";
         sha256 = "sha256-ZqCwGpSmLhfnWYNdgrkvGXOv44wmEUVhfuo+i/cUfck=";
       };
     });
@@ -60,7 +60,7 @@ in {
   config = mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        rnix-lsp
+        customPackages.nixd
         nixfmt
         alejandra
         nil # Nix
@@ -326,7 +326,7 @@ in {
                 }
             }
             require('lspconfig').nil_ls.setup{}
-            require('lspconfig').rnix.setup{}
+            require('lspconfig').nixd.setup{}
             -- require('lspconfig').pylsp.setup{}
             -- require('lspconfig').pylyzer.setup{}
             require('lspconfig').pyright.setup{}

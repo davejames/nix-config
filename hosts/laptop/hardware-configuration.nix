@@ -125,7 +125,7 @@
 
   services = {
     xserver.videoDrivers = ["intel" "nvidia"];
-    xserver.layout = "us";
+    xserver.xkb.layout = "us";
     xserver.libinput.enable = true;
     printing = {
       enable = true;

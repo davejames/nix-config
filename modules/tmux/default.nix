@@ -63,7 +63,7 @@ in {
         }
         {
           plugin = power-theme;
-          extraConfig = "set -g @tmux_power_theme '#${config.colorScheme.colors.base0D}'";
+          extraConfig = "set -g @tmux_power_theme '#${config.colorScheme.palette.base0D}'";
         }
       ];
     };

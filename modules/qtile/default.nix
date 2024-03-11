@@ -55,22 +55,22 @@ in {
           )
 
           colour_scheme = ColourScheme(
-              "#${config.colorScheme.colors.base00}",
-              "#${config.colorScheme.colors.base01}",
-              "#${config.colorScheme.colors.base02}",
-              "#${config.colorScheme.colors.base03}",
-              "#${config.colorScheme.colors.base04}",
-              "#${config.colorScheme.colors.base05}",
-              "#${config.colorScheme.colors.base06}",
-              "#${config.colorScheme.colors.base07}",
-              "#${config.colorScheme.colors.base08}",
-              "#${config.colorScheme.colors.base09}",
-              "#${config.colorScheme.colors.base0A}",
-              "#${config.colorScheme.colors.base0B}",
-              "#${config.colorScheme.colors.base0C}",
-              "#${config.colorScheme.colors.base0D}",
-              "#${config.colorScheme.colors.base0E}",
-              "#${config.colorScheme.colors.base0F}",
+              "#${config.colorScheme.palette.base00}",
+              "#${config.colorScheme.palette.base01}",
+              "#${config.colorScheme.palette.base02}",
+              "#${config.colorScheme.palette.base03}",
+              "#${config.colorScheme.palette.base04}",
+              "#${config.colorScheme.palette.base05}",
+              "#${config.colorScheme.palette.base06}",
+              "#${config.colorScheme.palette.base07}",
+              "#${config.colorScheme.palette.base08}",
+              "#${config.colorScheme.palette.base09}",
+              "#${config.colorScheme.palette.base0A}",
+              "#${config.colorScheme.palette.base0B}",
+              "#${config.colorScheme.palette.base0C}",
+              "#${config.colorScheme.palette.base0D}",
+              "#${config.colorScheme.palette.base0E}",
+              "#${config.colorScheme.palette.base0F}",
           )
 
           layout_defaults = {
