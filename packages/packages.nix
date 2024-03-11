@@ -1,11 +1,7 @@
-{
-  pkgs,
-  ...
-}:
-let
-  timewarrior = import ./timewarrior.nix { inherit pkgs; };
-
-in 
-  pkgs.lib.recursiveUpdate timewarrior
-
-
+{pkgs, ...}: let
+  packages = [
+    (import ./timewarrior.nix {inherit pkgs;})
+  ];
+in
+  with pkgs.lib;
+    foldl' (acc: item: recursiveUpdate acc item) {} packages
