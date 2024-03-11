@@ -23,7 +23,7 @@
       simplescreenrecorder
       bitwarden
       bitwarden-cli
-      postman
+      # postman
       insomnia
       pgcli
       pspg
