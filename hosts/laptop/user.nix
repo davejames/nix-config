@@ -4,6 +4,7 @@
   ];
 
   config.modules = {
+    atuin.enable = true;
     qtile.enable = true;
     willdooit.enable = true;
     timewarrior.enable = true;

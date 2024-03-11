@@ -2,6 +2,7 @@
   home.stateVersion = "22.11";
   imports = [
     ./qtile
+    ./atuin
     ./alacritty
     ./nvim
     ./fish

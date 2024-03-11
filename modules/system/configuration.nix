@@ -22,7 +22,7 @@
       simplescreenrecorder
       bitwarden
       bitwarden-cli
-      # postman
+      postman
       insomnia
       pgcli
       pspg
@@ -69,6 +69,7 @@
       reptyr
       comma
       nix-index
+      ncdu
     ];
   };
 
@@ -167,10 +168,6 @@
 
   nixpkgs.config = {
    allowUnfree = true;
-   permittedInsecurePackages = [
-     "electron-25.9.0"
-     # "nix-2.16.2"
-   ];
   };
 
   time.timeZone = "Australia/Melbourne";
