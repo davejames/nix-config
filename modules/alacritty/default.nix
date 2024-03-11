@@ -26,12 +26,12 @@ in {
           };
           size = 8.0;
         };
-        foreground = "#${config.colorScheme.colors.base05}";
-        background = "#${config.colorScheme.colors.base00}";
-        cursor = {
-          text = "#${config.colorScheme.colors.base00}";
-          cursor = "#${config.colorScheme.colors.base05}";
-        };
+        # foreground = "#${config.colorScheme.colors.base05}";
+        # background = "#${config.colorScheme.colors.base00}";
+        # cursor = {
+        #   text = "#${config.colorScheme.colors.base00}";
+        #   cursor = "#${config.colorScheme.colors.base05}";
+        # };
         colors = {
           primary = {
             background = "#${config.colorScheme.colors.base00}";
