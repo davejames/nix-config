@@ -1,6 +1,5 @@
 {pkgs, ...}: {
-  nixpkgs.config.allowUnfree = true;
-
+  
   programs.zsh.enable = true;
   users.users.djames = {
     isNormalUser = true;
@@ -165,6 +164,13 @@
       keep-outputs = true
       keep-derivations = true
     '';
+  };
+  
+  nixpkgs.config = {
+   allowUnfree = true;
+   permittedInsecurePackages = [
+     "electron-25.9.0"
+   ];
   };
 
   time.timeZone = "Australia/Melbourne";
