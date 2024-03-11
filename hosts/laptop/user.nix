@@ -6,11 +6,14 @@
   config.modules = {
     qtile.enable = true;
     willdooit.enable = true;
+    timewarrior.enable = true;
     nvim.enable = true;
     jetbrains = {
       pycharm.enable = true;
       datagrip.enable = true;
     };
+    vscode.enable = true;
+    wavebox.enable = true;
     alacritty.enable = true;
     docker.enable = true;
     tmux.enable = true;

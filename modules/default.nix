@@ -8,8 +8,11 @@
     ./zsh
     ./git
     ./willdooit
+    ./timewarrior
     ./jetbrains
+    ./vscode
     ./docker
+    ./wavebox
     ./tmux
     ./rofi
     ./scripts

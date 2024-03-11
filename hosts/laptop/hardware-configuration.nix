@@ -93,6 +93,10 @@
   virtualisation = {
     docker.enable = true;
     libvirtd.enable = true;
+    virtualbox.host = {
+      enable = true;
+      enableExtensionPack = true;
+    };
   };
 
   hardware = {
@@ -123,7 +127,10 @@
     xserver.videoDrivers = ["intel" "nvidia"];
     xserver.layout = "us";
     xserver.libinput.enable = true;
-    printing.enable = true;
+    printing = {
+      enable = true;
+      browsing = true;
+    };
     blueman.enable = true;
 
     pipewire = {
