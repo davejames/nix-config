@@ -33,11 +33,13 @@ floating_layout = layout.Floating(
     ]
 )
 
+
 @hook.subscribe.client_new
 def float_pycharm(window):
     wm_class = window.window.get_wm_class()
     if "jetbrains" in wm_class[0]:
         window.floating = False
+
 
 auto_fullscreen = True
 focus_on_window_activation = "smart"
