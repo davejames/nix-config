@@ -16,16 +16,17 @@ in {
         desktopManager.xterm.enable = true;
         windowManager.qtile = {
           enable = true;
-          extraPackages = _: with pkgs.python3Packages; [
-            qtile-extras
-            psutil
-            dbus-python
-            pyxdg
-            mpd2
-            dateutil
-            keyring
-            jsons
-          ];
+          extraPackages = _:
+            with pkgs.python3Packages; [
+              qtile-extras
+              psutil
+              dbus-python
+              pyxdg
+              mpd2
+              dateutil
+              keyring
+              jsons
+            ];
         };
         displayManager = {
           lightdm = {

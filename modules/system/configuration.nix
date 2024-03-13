@@ -1,5 +1,4 @@
 {pkgs, ...}: {
-
   programs.zsh.enable = true;
   users.users.djames = {
     isNormalUser = true;
@@ -167,7 +166,7 @@
   };
 
   nixpkgs.config = {
-   allowUnfree = true;
+    allowUnfree = true;
   };
 
   time.timeZone = "Australia/Melbourne";

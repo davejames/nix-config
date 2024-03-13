@@ -14,7 +14,7 @@ with lib; let
       sha256 = "sha256-LM4H/tQLuEpuYW3tIqUwT5SDzJFmRzBO5WZfPFI6yU0=";
       arch = "linux-x64";
     };
-    buildInputs = [ pkgs.nodePackages.pyright ];
+    buildInputs = [pkgs.nodePackages.pyright];
     meta = {
       changelog = "https://marketplace.visualstudio.com/items/trinhanhngoc.vscode-odoo/changelog";
       description = "Odoo Framework Integration for Visual Studio Code";

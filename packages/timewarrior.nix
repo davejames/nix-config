@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-let
+{pkgs, ...}: let
   pyPackages = pkgs.python3Packages;
   timew-report = pyPackages.buildPythonPackage rec {
     pname = "timew-report";
@@ -29,12 +25,15 @@ let
     };
   };
   timewarriorApp = pkgs.timewarrior.overrideAttrs (oldAttrs: {
-    nativeBuildInputs = oldAttrs.nativeBuildInputs or [] ++ [ pkgs.makeWrapper ];
-    postInstall = with pyPackages; oldAttrs.postInstall or "" + ''
-      wrapProgram $out/bin/timew \
-        --prefix PATH : ${pkgs.lib.makeBinPath [ python pyfzf plumbum timew-report ]} \
-        --set PYTHONPATH "${python.pkgs.makePythonPath [ pyfzf plumbum timew-report ]}"
-    '';
+    nativeBuildInputs = oldAttrs.nativeBuildInputs or [] ++ [pkgs.makeWrapper];
+    postInstall = with pyPackages;
+      oldAttrs.postInstall
+      or ""
+      + ''
+        wrapProgram $out/bin/timew \
+          --prefix PATH : ${pkgs.lib.makeBinPath [python pyfzf plumbum timew-report]} \
+          --set PYTHONPATH "${python.pkgs.makePythonPath [pyfzf plumbum timew-report]}"
+      '';
   });
 
   timew-fzf = pkgs.fetchFromGitHub {
@@ -43,7 +42,6 @@ let
     rev = "69923ebb03c87f7a1cbbba79829e9b5339c0cd92";
     sha256 = "sha256-9tULvmp75vpwG7fvVCfsNcU+fj+hNg8gLFnVH0jX7N4=";
   };
-
 in {
   timewarrior = timewarriorApp;
   timewarriorPlugins = {

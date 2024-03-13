@@ -12,29 +12,25 @@
 
     willdooit-dev-cli.url = "git+ssh://git@github.com/WilldooIT-Private/willdooit-dev-cli?ref=main";
     willdooit-commitizen.url = "git+ssh://git@github.com/WilldooIT-Private/willdooit-commitizen?ref=flake-fix";
-    erosanix= {
+    erosanix = {
       url = "github:emmanuelrosa/erosanix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   # All outputs for the system (configs)
-  outputs = {
-    home-manager,
-    ...
-  } @ inputs: let
-
+  outputs = {home-manager, ...} @ inputs: let
     # This lets us reuse the code to "create" a system
     # Credits go to sioodmy on this one!
     # https://github.com/sioodmy/dotfiles/blob/main/flake.nix
     mkSystem = nixpkgs: system: hostname:
-    nixpkgs.lib.nixosSystem {
+      nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           {
             networking.hostName = hostname;
             nixpkgs.overlays = [
-              (import ./overlay.nix { inherit nixpkgs; })
+              (import ./overlay.nix {inherit nixpkgs;})
             ];
           }
           # General configuration (users, networking, sound, etc)

@@ -8,7 +8,6 @@ with lib; let
   cfg = config.modules.timewarrior;
   timewarrior = pkgs.customPackages.timewarrior;
   timew-fzf = pkgs.customPackages.timewarriorPlugins.timew-fzf;
-
 in {
   options.modules.timewarrior = {enable = mkEnableOption "timewarrior";};
   config = mkIf cfg.enable {
