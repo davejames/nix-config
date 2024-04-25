@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+QTILE_LAYOUT="monadtall"
+QTILE_GROUPS=("WWW4" "WWW5" "6" "7" "8" "9")
 
 if [ "$1" = "home" ]; then
     MODEBUILTIN="1920x1080"
@@ -7,6 +9,7 @@ if [ "$1" = "home" ]; then
     POS1="0x1195 --rotate normal"
     POS2="3840x0 --rotate right"
     POSB="6000x1900 --rotate normal"
+    QTILE_LAYOUT="monadwide"
 elif [ "$1" = "work" ]; then
     MODEBUILTIN="1920x1080"
     MODE1="3840x2160 --rate 30.00"
@@ -64,3 +67,8 @@ fi
 
 echo "Reloading Qtile"
 qtile cmd-obj -o cmd -f reload_config
+if [ "$QTILE_LAYOUT" != "monadtall" ]; then
+    for group in "${QTILE_GROUPS[@]}"; do
+        eval "qtile cmd-obj -o group '$group' -f setlayout -a '$QTILE_LAYOUT'"
+    done
+fi
