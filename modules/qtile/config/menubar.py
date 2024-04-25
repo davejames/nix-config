@@ -202,6 +202,27 @@ def generate_bar_elements(
             foreground=base_colour,
             background=base_colour,
         ),
+        # Volume Control
+        widget.TextBox(
+            font="Font Awesome 6 Free",
+            text="\uf025",
+            padding=icon_padding,
+            foreground=colour_scheme.col(7, gradient=False),
+            background=colour_scheme.col(9),
+        ),
+        widget.Volume(
+            foreground=colour_scheme.col(7, gradient=False),
+            background=colour_scheme.col(9),
+            padding=widget_padding,
+            width=70,
+            volume_app="pwvucontrol",
+        ),
+        widget.Sep(
+            linewidth=0,
+            padding=sep_padding,
+            foreground=base_colour,
+            background=base_colour,
+        ),
         # Systray
         # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
         # Systray can only be displayed once, so it is only displayed on the primary display
