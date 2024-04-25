@@ -92,6 +92,15 @@
       wlo1.useDHCP = mkDefault true;
     };
     networkmanager.enable = true;
+    firewall = {
+      enable = true;
+      extraCommands = ''
+        ip46tables -t nat -A OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443
+      '';
+      extraStopCommands = ''
+        ip46tables -t nat -D OUTPUT -o lo -p tcp --dport 443 -j REDIRECT --to-port 8443 2>/dev/null || true
+      '';
+    };
   };
 
   programs.nm-applet.enable = true;
