@@ -2,7 +2,7 @@
 {
   disko.devices = { 
     disk = {
-      "${diskName}" = {
+      main = {
         type = "disk";
         device = "/dev/${diskName}";
         content = {
@@ -44,8 +44,8 @@
           atime = "off";
           dedup = "on";
           devices = "off";
-          canmount = "on";
-          mountpoint = "/";
+          canmount = "off";
+          mountpoint = "none";
           xattr = "sa";
         };
         postCreateHook = ''
