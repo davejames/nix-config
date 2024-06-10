@@ -1,3 +1,5 @@
 {
-  disko.devices = import ../../disks/zfs.nix {diskName = "sda";};
+  imports = [
+    (import ../../disks/zfs.nix {diskName = "sda";})
+  ];
 }
