@@ -50,8 +50,8 @@
         specialArgs = {inherit inputs outputs system hostname;};
         modules = [
           # > Our main nixos configuration file <
-          ./nixos/common
-          ./nixos/${hostname}
+          ./hosts/common
+          ./hosts/${hostname}
           disko.nixosModules.disko
           # ./nixos/configuration.nix
         ];
