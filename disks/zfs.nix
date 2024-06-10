@@ -1,6 +1,6 @@
 {diskName, ...}:
 {
-  disko.devices = { 
+  devices = { 
     disk = {
       main = {
         type = "disk";
