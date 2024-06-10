@@ -58,7 +58,7 @@
           };
           "ROOT/empty" = {
             type = "zfs_fs";
-            options.mountpoint = "/";
+            mountpoint = "/";
             postCreateHook = ''
               zfs list -t snapshot -H -o name | grep -E '^zroot/ROOT/empty$' || zfs snapshot zroot/ROOT/empty@start
             '';
@@ -70,11 +70,11 @@
         };
         "ROOT/tmp" = {
             type = "zfs_fs";
-            options.mountpoint = "/tmp";
+            mountpoint = "/tmp";
         };
         "ROOT/nix" = {
             type = "zfs_fs";
-            options.mountpoint = "/nix";
+            mountpoint = "/nix";
         };
 
           "ROOT/nix/store" = {
@@ -92,16 +92,16 @@
           };
         "data/home" = {
             type = "zfs_fs";
-            options.mountpoint = "/home";
+            mountpoint = "/home";
         };
           "data/home/djames" = {
             type = "zfs_fs";
-            options.mountpoint = "/home/djames";
+            mountpoint = "/home/djames";
           };
           "data/home/djames/Downloads" = {
             type = "zfs_fs";
+            mountpoint = "/home/djames/Downloads";
             options = {
-                mountpoint = "/home/djames/Downloads";
                 "com.sun:auto-snapshot" = "false";
             };
           };
