@@ -83,7 +83,7 @@
             "com.sun:auto-snapshot" = "true";
           };
         };
-      "data/home/" = {
+      "data/home" = {
           type = "zfs_fs";
           options.mountpoint = "/home";
       };
