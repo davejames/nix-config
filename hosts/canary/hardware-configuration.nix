@@ -9,21 +9,32 @@
 }: {
   boot = {
     supportedFilesystems = ["zfs"];
-    loader = {
-      generationsDir.copyKernels = true;
-      efi = {
-        canTouchEfiVariables = false;
-      };
-      grub = {
+    boot.loader = {
+      efi.canTouchEfiVariables = true;
+
+      systemd-boot = {
         enable = true;
-        useOSProber = true;
-        copyKernels = true;
-        efiSupport = true;
-        device = "nodev";
-        zfsSupport = true;
-        efiInstallAsRemovable = true;
+        editor = false;
+
+        memtest86.enable = true;
+        netbootxyz.enable = true;
       };
     };
+    # loader = {
+    #   generationsDir.copyKernels = true;
+    #   efi = {
+    #     canTouchEfiVariables = false;
+    #   };
+    #   grub = {
+    #     enable = true;
+    #     useOSProber = true;
+    #     copyKernels = true;
+    #     efiSupport = true;
+    #     device = "nodev";
+    #     zfsSupport = true;
+    #     efiInstallAsRemovable = true;
+    #   };
+    # };
   };
 }
 
