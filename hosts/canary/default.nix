@@ -10,7 +10,22 @@ in
     (import ../../disks/zfs.nix { diskName = "sda"; })
     inputs.disko.nixosModules.disko
   ];
-  boot.zfs.requestEncryptionCredentials = true;
+  boot = {
+    initrd.systemd.enable = true;
+    zfs.requestEncryptionCredentials = true;
+    supportedFilesystems = ["zfs"];
+    loader = {
+      efi.canTouchEfiVariables = true;
+
+      systemd-boot = {
+        enable = true;
+        editor = false;
+
+        memtest86.enable = true;
+        netbootxyz.enable = true;
+      };
+    };
+  };
   services.zfs = {
     autoScrub.enable = true;
     autoSnapshot.enable = true;
