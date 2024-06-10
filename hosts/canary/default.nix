@@ -7,7 +7,7 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # ./disks.nix
-    ../../disks/zfs.nix { diskName = "sda"; }
+    (import ../../disks/zfs.nix { diskName = "sda"; })
     inputs.disko.nixosModules.disko
   ];
   networking.hostId = "924bfedc";
