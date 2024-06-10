@@ -1,4 +1,3 @@
-{disk, ...}:
 {
-  disko = import ../../disks/zfs.nix {inherit disk;};
+  disko = import ../../disks/zfs.nix {disk = "sda";};
 }
