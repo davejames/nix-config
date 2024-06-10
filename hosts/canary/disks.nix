@@ -1,3 +1,3 @@
 {
-  disko = import ../../disks/zfs.nix {disk = "sda";};
+  disko = import ../../disks/zfs.nix {diskName = "sda";};
 }
