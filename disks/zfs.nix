@@ -18,7 +18,7 @@
                 mountpoint = "/boot";
               };
             };
-            zfs = {
+            root = {
               priority = 2;
               size = "100%";
               content = {
