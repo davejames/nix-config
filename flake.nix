@@ -52,7 +52,7 @@
           # > Our main nixos configuration file <
           ./hosts/common
           ./hosts/${hostname}
-          disko.nixosModules.disko
+          inputs.disko.nixosModules.disko
           # ./nixos/configuration.nix
         ];
       };
