@@ -44,7 +44,7 @@
           atime = "off";
           dedup = "on";
           devices = "off";
-          canmount = "off";
+          canmount = "on";
           mountpoint = "none";
           xattr = "sa";
         };
