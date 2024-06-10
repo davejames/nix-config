@@ -45,7 +45,7 @@
           dedup = "on";
           devices = "off";
           canmount = "on";
-          mountpoint = "none";
+          mountpoint = "/";
           xattr = "sa";
         };
         postCreateHook = ''
