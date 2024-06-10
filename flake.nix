@@ -47,7 +47,7 @@
     mkSystem = system: hostname:
     nixpkgs.lib.nixosSystem {
       inherit system;
-        specialArgs = {inherit inputs outputs;};
+        specialArgs = {inherit inputs outputs system;};
         modules = [
           # > Our main nixos configuration file <
           ./nixos/common
