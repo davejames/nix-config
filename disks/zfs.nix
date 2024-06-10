@@ -1,6 +1,6 @@
 {diskName, ...}:
 {
-  disko.devices = 
+  disko.devices = { 
     disk = {
       "${diskName}" = {
         type = "disk";
