@@ -7,6 +7,7 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./disks.nix
+    inputs.disko.nixosModules.disko
   ];
   networking.hostId = "924bfedc";
   # disko.devices = import ../../disks/zfs.nix { inherit diskName;};
