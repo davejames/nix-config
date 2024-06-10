@@ -9,7 +9,7 @@
 }: {
   boot = {
     supportedFilesystems = ["zfs"];
-    boot.loader = {
+    loader = {
       efi.canTouchEfiVariables = true;
 
       systemd-boot = {
