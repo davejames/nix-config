@@ -10,6 +10,7 @@
           partitions = {
             ESP = {
               priority = 1;
+              start = "0";
               size = "1G";
               type = "EF00";
               content = {
@@ -113,4 +114,6 @@
       };
     };
   };
+  fileSystems."/".neededForBoot = true;
+  fileSystems."/boot".neededForBoot = true;
 }

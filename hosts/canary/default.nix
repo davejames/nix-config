@@ -10,6 +10,12 @@ in
     # (import ../../disks/zfs.nix { diskName = "sda"; })
     inputs.disko.nixosModules.disko
   ];
+  boot.zfs.requestEncryptionCredentials = true;
+  services.zfs = {
+    autoScrub.enable = true;
+    autoSnapshot.enable = true;
+  };
+
   networking.hostId = "924bfedc";
   # disko.devices = import ../../disks/zfs.nix { inherit diskName;};
 }
