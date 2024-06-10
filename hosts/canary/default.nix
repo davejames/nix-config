@@ -1,4 +1,4 @@
-{ config, pkgs, self, ... }:
+{ inputs, config, pkgs, self, ... }:
 let
   diskName = "sda";
 in
