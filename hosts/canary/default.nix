@@ -8,5 +8,6 @@ in
     ./hardware-configuration.nix
     ./disks.nix
   ];
+  networking.hostId = "924bfedc";
   # disko.devices = import ../../disks/zfs.nix { inherit diskName;};
 }
