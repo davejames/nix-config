@@ -114,6 +114,4 @@
       };
     };
   };
-  fileSystems."/".neededForBoot = true;
-  fileSystems."/boot".neededForBoot = true;
 }

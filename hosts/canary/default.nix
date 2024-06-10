@@ -11,8 +11,14 @@ in
     inputs.disko.nixosModules.disko
   ];
   boot = {
-    initrd.systemd.enable = true;
-    zfs.requestEncryptionCredentials = true;
+    initrd = {
+      kernelModules = [ "zfs" ];
+      systemd.enable = true;
+    };
+    zfs = {
+      # requestEncryptionCredentials = true;
+      forceImportRoot = true;
+    };
     supportedFilesystems = ["zfs"];
     loader = {
       efi.canTouchEfiVariables = true;
@@ -31,6 +37,8 @@ in
     autoSnapshot.enable = true;
   };
 
+  fileSystems."/".neededForBoot = true;
+  fileSystems."/boot".neededForBoot = true;
   networking.hostId = "924bfedc";
   # disko.devices = import ../../disks/zfs.nix { inherit diskName;};
 }
